@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, ViewChild, computed, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, effect, inject } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MarvelService } from '../marvel.service';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MarvelHero } from '../interfaces/marvel.interface';
+import { MarvelService } from '../marvel.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,29 +18,31 @@ export class DashboardComponent {
 
   displayedColumns: string[] = ['nameLabel', 'genderLabel', 'occupationLabel', 'skillsLabel', 'creatorLabel', 'citizenshipLabel', 'memberOfLabel'];
 
+  dataSource = new MatTableDataSource<MarvelHero>([]);
+
+  clickedRows = new Set<MarvelHero>();
+
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
 
-  sortedHero: MarvelHero[] = [];
+  @ViewChild(MatSort) sort: MatSort = {} as MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
 
   constructor() {
     inject(MarvelService).getSuperHeroes();
-
-    effect(() => {
-      this.sortedHero = this.superheroes();
-    });
+    this.listenToSuperheroes();
   }
 
-  sortData(sort: Sort) {
-    const data = this.superheroes().slice();
+  public selectHero(hero: MarvelHero) {
+    console.log('🚀 ~ DashboardComponent ~ selectHero ~ hero:', hero)
+  }
 
-    if (!sort.active || sort.direction === '') {
-      this.sortedHero = data;
-    } else {
-      this.sortedHero = data.sort((a, b) => {
-        const aValue = (a as any)[sort.active];
-        const bValue = (b as any)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
+  private listenToSuperheroes() {
+    effect(() => {
+      this.dataSource.data = this.superheroes()
+    });
   }
 }
