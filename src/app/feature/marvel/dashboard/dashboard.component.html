@@ -1,0 +1,29 @@
+<table matSort (matSortChange)="sortData($event)">
+  <tr>
+    <th mat-sort-header="nameLabel">Name</th>
+    <th mat-sort-header="genderLabel">Gender</th>
+    <th mat-sort-header="occupationLabel">Occupation</th>
+    <th mat-sort-header="skillsLabel">Skills</th>
+    <th mat-sort-header="creatorLabel">Creator</th>
+    <th mat-sort-header="citizenshipLabel">Citizen</th>
+    <th mat-sort-header="memberOfLabel">Member of</th>
+  </tr>
+
+  @for (heroe of sortedHero; track heroe) {
+  <tr>
+    <td>{{ heroe.nameLabel }}</td>
+    <td>{{ heroe.genderLabel }}</td>
+    <td>{{ heroe.occupationLabel }}</td>
+    <td>{{ heroe.skillsLabel }}</td>
+    <td>{{ heroe.creatorLabel }}</td>
+    <td>{{ heroe.citizenshipLabel }}</td>
+    <td>{{ heroe.memberOfLabel }}</td>
+  </tr>
+  }
+</table>
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons
+  aria-label="Select page of marvel heroes"
+>
+</mat-paginator>

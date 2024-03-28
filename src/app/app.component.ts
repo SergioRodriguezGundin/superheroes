@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { SuperheroesLayoutComponent } from './layout/superheroes-layout/superheroes-layout.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [SuperheroesLayoutComponent],
+  template: '<app-superheroes-layout/>',
 })
 export class AppComponent {
-  title = 'superheroes';
 }

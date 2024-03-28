@@ -1,1 +1,83 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$my-typography: mat.define-typography-config(
+  $font-family: 'Ubuntu',
+);
+
+// The warn palette is optional (defaults to red).
+$marvel-superheroes-warn: mat.define-palette(mat.$red-palette);
+
+// Define a dark theme
+$dark-theme: mat.define-dark-theme((
+ color: (
+   primary: mat.define-palette(mat.$pink-palette),
+   accent: mat.define-palette(mat.$blue-grey-palette),
+   warn: $marvel-superheroes-warn,
+ ),
+  typography: $my-typography,
+  density: 0,
+));
+
+$light-theme: mat.define-light-theme((
+ color: (
+   primary: mat.define-palette(mat.$indigo-palette),
+   accent: mat.define-palette(mat.$pink-palette),
+   warn: $marvel-superheroes-warn,
+ ),
+ typography: $my-typography,
+ density: 0,
+));
+
+// Apply the dark theme by default
+@include mat.all-component-themes($dark-theme);
+@include mat.typography-hierarchy($my-typography);
+
+// Apply the light theme only when the user prefers light themes.
+@media (prefers-color-scheme: light) {
+  // Use the `-color` mixins to only apply color styles without reapplying the same
+  // typography and density styles.
+  @include mat.all-component-colors($light-theme);
+}
+
+
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  min-width: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+p, span {
+  margin: 0;
+  padding: 0;
+}
+
+img, video, svg {
+  display: block;
+  height: auto;
+  max-width: 100%;
+} 
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
