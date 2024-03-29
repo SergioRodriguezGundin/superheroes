@@ -7,11 +7,15 @@ import { TableComponent } from '../../../ui/table/table.component';
 import { MarvelHero } from '../interfaces/marvel.interface';
 import { MarvelService } from '../marvel.service';
 import { marvelSuperHeroesColumns } from '../models/marvel.model';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { AccordionComponent } from '../../../ui/accordion/accordion.component';
+import { HeroFormComponent } from '../hero-form/hero-form.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SearchComponent, TableComponent],
+  imports: [SearchComponent, TableComponent, MatIcon, MatButton, AccordionComponent, HeroFormComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +31,19 @@ export class DashboardComponent {
 
   constructor(public dialog: MatDialog) {
     inject(MarvelService).getSuperHeroes();
+  }
+
+  public addHero() {
+    this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Add Hero',
+        content: {
+          component: HeroFormComponent,
+          inputs: {},
+        },
+        actions: null,
+      } as DialogInputs,
+    })
   }
 
   public selectHero(hero: MarvelHero) {

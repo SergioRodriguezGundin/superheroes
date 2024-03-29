@@ -1,0 +1,65 @@
+<form class="hero-form" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+  <div class="hero-form-container">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="nameLabel" />
+      @if(heroForm.get('nameLabel')?.hasError('required')) {
+      <mat-error>Hero name is required</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-field">
+      <label id="gener-radio-group">Gender</label>
+      <mat-radio-group
+        aria-labelledby="gener-radio-group"
+        formControlName="genderLabel"
+      >
+        <mat-radio-button value="Male">Male</mat-radio-button>
+        <mat-radio-button value="Female">Female</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <div class="hero-form-container">
+    <mat-form-field>
+      <mat-label>Citizenship</mat-label>
+      <input matInput formControlName="citizenshipLabel" />
+      @if(heroForm.get('citizenshipLabel')?.hasError('required')) {
+      <mat-error>Citizenship is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Occupation</mat-label>
+      <input matInput formControlName="occupationLabel" />
+      @if(heroForm.get('occupationLabel')?.hasError('required')) {
+      <mat-error>Occupation is required</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="hero-form-container">
+    <mat-form-field>
+      <mat-label>Skills</mat-label>
+      <input matInput formControlName="skillsLabel" />
+      @if(heroForm.get('skillsLabel')?.hasError('required')) {
+      <mat-error>At least one skill is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Creator</mat-label>
+      <input matInput formControlName="creatorLabel" />
+      @if(heroForm.get('creatorLabel')?.hasError('required')) {
+      <mat-error>Crator is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Member Of</mat-label>
+      <input matInput formControlName="memberOfLabel" />
+      @if(heroForm.get('memberOfLabel')?.hasError('required')) {
+      <mat-error>member is required</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

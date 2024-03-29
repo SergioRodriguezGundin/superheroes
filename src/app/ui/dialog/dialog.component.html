@@ -1,3 +1,13 @@
+<button
+  mat-mini-fab
+  mat-dialog-close
+  cdkFocusInitial
+  class="dialog-close-button"
+  (click)="closeDialog()"
+>
+  <mat-icon>close</mat-icon>
+</button>
+
 <h2 mat-dialog-title>{{ title }}</h2>
 <mat-dialog-content>
   <ng-container
@@ -7,9 +17,5 @@
 <mat-dialog-actions>
   @if (actions) {
   <ng-container *ngComponentOutlet="actions"></ng-container>
-  } @else {
-  <button mat-button mat-dialog-close cdkFocusInitial (click)="closeDialog()">
-    Close
-  </button>
   }
 </mat-dialog-actions>

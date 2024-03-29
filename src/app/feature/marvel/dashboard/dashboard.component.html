@@ -1,8 +1,20 @@
-<app-search
-  searchType="Hero"
-  [searchItems]="superheroesNames()"
-  (search)="applySearch($event)"
-></app-search>
+<section class="hero-options">
+  <app-search
+    searchType="Hero"
+    [searchItems]="superheroesNames()"
+    (search)="applySearch($event)"
+  ></app-search>
+  <div class="hero-options-new">
+    <button mat-flat-button color="primary" (click)="addHero()">
+      <mat-icon>add</mat-icon>Create Hero
+    </button>
+  </div>
+</section>
+<section class="hero-accordion">
+  <app-accordion>
+    <app-hero-form accordionBody></app-hero-form>
+  </app-accordion>
+</section>
 <app-table
   [dataTable]="superheroes()"
   [displayedColumns]="displayedColumns"

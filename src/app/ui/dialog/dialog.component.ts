@@ -4,11 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 
 export interface DialogInputs {
   title: string;
@@ -29,7 +29,8 @@ export interface ContentDialog {
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatButtonModule
+    MatButtonModule,
+    MatIcon
   ],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss'

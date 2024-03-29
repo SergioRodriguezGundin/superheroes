@@ -60,12 +60,22 @@ export enum MarvelHeroSkills {
 }
 type MarvelHeroSkillsType = keyof typeof MarvelHeroSkills;
 
+//export interface MarvelHero {
+//  citizenshipLabel: CountriesType;
+//  creatorLabel: string;
+//  genderLabel: MarvelHeroGenderType;
+//  memberOfLabel: string;
+//  nameLabel: string;
+//  occupationLabel: MarvelHeroOccupationType;
+//  skillsLabel: MarvelHeroSkillsType;
+//}
+
 export interface MarvelHero {
   citizenshipLabel: CountriesType;
   creatorLabel: string;
   genderLabel: MarvelHeroGenderType;
   memberOfLabel: string;
   nameLabel: string;
-  occupationLabel: MarvelHeroOccupationType;
-  skillsLabel: MarvelHeroSkillsType;
+  occupationLabel: string;
+  skillsLabel: string;
 }
