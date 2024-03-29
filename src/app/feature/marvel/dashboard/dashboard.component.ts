@@ -6,6 +6,7 @@ import { SearchComponent } from '../../../ui/search/search.component';
 import { TableComponent } from '../../../ui/table/table.component';
 import { MarvelHero } from '../interfaces/marvel.interface';
 import { MarvelService } from '../marvel.service';
+import { marvelSuperHeroesColumns } from '../models/marvel.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,7 @@ export class DashboardComponent {
 
   superheroesNames = inject(MarvelService).superheroesNames;
 
-  displayedColumns: string[] = ['nameLabel', 'genderLabel', 'occupationLabel', 'skillsLabel', 'creatorLabel', 'citizenshipLabel', 'memberOfLabel'];
+  displayedColumns: string[] = marvelSuperHeroesColumns;
 
   constructor(public dialog: MatDialog) {
     inject(MarvelService).getSuperHeroes();

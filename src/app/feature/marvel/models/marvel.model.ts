@@ -1,0 +1,1 @@
+export const marvelSuperHeroesColumns = ['nameLabel', 'genderLabel', 'occupationLabel', 'skillsLabel', 'creatorLabel', 'citizenshipLabel', 'memberOfLabel']

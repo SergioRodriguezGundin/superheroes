@@ -12,29 +12,23 @@ import { MarvelHero } from '../../feature/marvel/interfaces/marvel.interface';
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TableComponent {
-  superheroes = input<MarvelHero[]>([]);
+export class TableComponent<T> {
+  dataTable = input<T[]>([]);
 
   displayedColumns = input<string[]>([]);
 
-  selectedRow = output<MarvelHero>();
+  selectedRow = output<T>();
 
-  dataSource = new MatTableDataSource<MarvelHero>([]);
+  dataSource = new MatTableDataSource<T>([]);
 
-  clickedRows = new Set<MarvelHero>();
+  clickedRows = new Set<T>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
 
   constructor() {
-    this.listenToSuperheroes();
-  }
-
-  private listenToSuperheroes() {
-    effect(() => {
-      this.dataSource.data = this.superheroes()
-    });
+    this.listenToDataTable();
   }
 
   ngAfterViewInit() {
@@ -42,7 +36,13 @@ export class TableComponent {
     this.dataSource.paginator = this.paginator;
   }
 
-  public selectHero(hero: MarvelHero) {
-    this.selectedRow.emit(hero);
+  public selectRow(row: T) {
+    this.selectedRow.emit(row);
+  }
+
+  private listenToDataTable() {
+    effect(() => {
+      this.dataSource.data = this.dataTable()
+    });
   }
 }
