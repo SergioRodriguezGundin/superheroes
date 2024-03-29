@@ -52,7 +52,6 @@ export class SearchComponent {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    debugger;
 
     if (value) {
       this.records.push(value);

@@ -1,0 +1,9 @@
+:host {
+  .mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover {
+    background: var(--mat-table-row-item-outline-color)
+  }
+}

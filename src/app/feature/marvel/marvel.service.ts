@@ -12,10 +12,12 @@ export class MarvelService {
 
   superheroesNames: WritableSignal<string[]> = signal([]);
 
+  inmutableHeroes: WritableSignal<MarvelHero[]> = signal([]);
+
   public getSuperHeroes() {
     this.httpClient.get<MarvelHero[]>(MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
       this.superheroes.set(heroes);
-
+      this.inmutableHeroes.set(heroes)
       this.setSuperheroesNames(heroes);
     });
   }
