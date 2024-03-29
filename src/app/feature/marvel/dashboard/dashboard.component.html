@@ -1,3 +1,9 @@
+<app-search
+  searchType="Hero"
+  [searchItems]="superheroesNames()"
+  (search)="applySearch($event)"
+></app-search>
+
 <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
   <!-- Name Column -->
   <ng-container matColumnDef="nameLabel">

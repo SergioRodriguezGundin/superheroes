@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  <ng-container
+    *ngComponentOutlet="content.component; inputs: content?.inputs"
+  ></ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+  @if (actions) {
+  <ng-container *ngComponentOutlet="actions"></ng-container>
+  } @else {
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="closeDialog()">
+    Close
+  </button>
+  }
+</mat-dialog-actions>
