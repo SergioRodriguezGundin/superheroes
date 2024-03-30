@@ -4,7 +4,9 @@ import { MarvelHero } from './interfaces/marvel.interface';
 
 const MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 
-@Injectable()
+@Injectable(
+  { providedIn: 'root' }
+)
 export class MarvelService {
   private httpClient = inject(HttpClient);
 
@@ -20,6 +22,12 @@ export class MarvelService {
       this.inmutableHeroes.set(heroes)
       this.setSuperheroesNames(heroes);
     });
+  }
+
+  public addSuperHero(hero: MarvelHero) {
+    this.superheroes.set([hero, ...this.superheroes()]);
+    this.inmutableHeroes.set([hero, ...this.inmutableHeroes()]);
+    this.setSuperheroesNames(this.superheroes());
   }
 
   private setSuperheroesNames(heroes: MarvelHero[]) {

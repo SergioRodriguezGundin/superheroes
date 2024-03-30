@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MarvelHero } from '../../feature/marvel/interfaces/marvel.interface';
 
 @Component({
@@ -6,7 +6,8 @@ import { MarvelHero } from '../../feature/marvel/interfaces/marvel.interface';
   standalone: true,
   imports: [],
   templateUrl: './hero.component.html',
-  styleUrl: './hero.component.scss'
+  styleUrl: './hero.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent {
   hero = input<MarvelHero>();

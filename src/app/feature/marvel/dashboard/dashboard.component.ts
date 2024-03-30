@@ -1,49 +1,57 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { AccordionComponent } from '../../../ui/accordion/accordion.component';
 import { DialogComponent, DialogInputs } from '../../../ui/dialog/dialog.component';
 import { HeroComponent } from '../../../ui/hero/hero.component';
 import { SearchComponent } from '../../../ui/search/search.component';
 import { TableComponent } from '../../../ui/table/table.component';
+import { HeroFormComponent } from '../hero-form/hero-form.component';
 import { MarvelHero } from '../interfaces/marvel.interface';
 import { MarvelService } from '../marvel.service';
 import { marvelSuperHeroesColumns } from '../models/marvel.model';
-import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
-import { AccordionComponent } from '../../../ui/accordion/accordion.component';
-import { HeroFormComponent } from '../hero-form/hero-form.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SearchComponent, TableComponent, MatIcon, MatButton, AccordionComponent, HeroFormComponent],
+  imports: [SearchComponent, TableComponent, MatIcon, MatButtonModule, MatMenuModule, AccordionComponent, HeroFormComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-  superheroes = inject(MarvelService).superheroes;
+  private marvelService = inject(MarvelService);
 
-  inmutableHeroes = inject(MarvelService).inmutableHeroes;
+  superheroes = this.marvelService.superheroes;
 
-  superheroesNames = inject(MarvelService).superheroesNames;
+  inmutableHeroes = this.marvelService.inmutableHeroes;
+
+  superheroesNames = this.marvelService.superheroesNames;
 
   displayedColumns: string[] = marvelSuperHeroesColumns;
 
+  openAccordion = false;
+
   constructor(public dialog: MatDialog) {
-    inject(MarvelService).getSuperHeroes();
+    this.marvelService.getSuperHeroes();
   }
 
-  public addHero() {
-    this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Add Hero',
-        content: {
-          component: HeroFormComponent,
-          inputs: {},
-        },
-        actions: null,
-      } as DialogInputs,
-    })
+  public addHeroFromDialog() {
+    const heroFormDialogRef = this.dialog.open(HeroFormComponent, {
+      width: '700px',
+      height: '600px',
+    });
+
+    heroFormDialogRef.componentInstance.heroSubmitted.subscribe((hero: MarvelHero) => {
+      this.storeNewHero(hero);
+      heroFormDialogRef.close();
+    });
+  }
+
+  public addHeroFromAccordion() {
+    this.openAccordion = !this.openAccordion;
   }
 
   public selectHero(hero: MarvelHero) {
@@ -62,6 +70,10 @@ export class DashboardComponent {
   public applySearch(query: string[]) {
     const dataSource = this.filterDataSourceBySearch(query);
     this.superheroes.set(dataSource)
+  }
+
+  public storeNewHero(hero: MarvelHero) {
+    this.marvelService.addSuperHero(hero);
   }
 
   private filterDataSourceBySearch(query: string[]): MarvelHero[] {

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MarvelHero } from '../interfaces/marvel.interface';
+import { MarvelService } from '../marvel.service';
 
 
 @Component({
@@ -16,8 +17,7 @@ import { MarvelHero } from '../interfaces/marvel.interface';
   styleUrl: './hero-form.component.scss'
 })
 export class HeroFormComponent {
-  hero = output<MarvelHero>();
-
+  heroSubmitted = output<MarvelHero>();
 
   heroForm = new FormGroup({
     nameLabel: new FormControl('', Validators.required),
@@ -31,7 +31,7 @@ export class HeroFormComponent {
 
   onSubmit() {
     if (this.heroForm.valid) {
-      this.hero.emit(this.heroForm.value as MarvelHero);
+      this.heroSubmitted.emit(this.heroForm.value as MarvelHero);
     }
   }
 }

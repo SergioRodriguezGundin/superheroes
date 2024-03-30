@@ -5,14 +5,23 @@
     (search)="applySearch($event)"
   ></app-search>
   <div class="hero-options-new">
-    <button mat-flat-button color="primary" (click)="addHero()">
-      <mat-icon>add</mat-icon>Create Hero
+    <button mat-button color="primary" [matMenuTriggerFor]="menu">
+      Create Hero <mat-icon>add</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="addHeroFromDialog()">from modal</button>
+      <button mat-menu-item (click)="addHeroFromAccordion()">
+        from accordion
+      </button>
+    </mat-menu>
   </div>
 </section>
 <section class="hero-accordion">
-  <app-accordion>
-    <app-hero-form accordionBody></app-hero-form>
+  <app-accordion [expansionPanelHeader]="false" [openAccordion]="openAccordion">
+    <app-hero-form
+      accordionBody
+      (heroSubmitted)="storeNewHero($event)"
+    ></app-hero-form>
   </app-accordion>
 </section>
 <app-table

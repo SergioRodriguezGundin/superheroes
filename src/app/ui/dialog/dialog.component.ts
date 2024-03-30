@@ -1,5 +1,5 @@
 import { NgComponentOutlet } from '@angular/common';
-import { Component, Inject, Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Type } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -33,7 +33,8 @@ export interface ContentDialog {
     MatIcon
   ],
   templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss'
+  styleUrl: './dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogComponent {
   title = 'Dialog';

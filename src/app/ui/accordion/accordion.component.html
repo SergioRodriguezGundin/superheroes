@@ -1,9 +1,10 @@
-<mat-accordion>
+<mat-accordion multi>
   <mat-expansion-panel>
+    @if (expansionPanelHeader()) {
     <mat-expansion-panel-header>
-      <mat-panel-title> Start here to create a new Hero </mat-panel-title>
+      <mat-panel-title> {{ expansionPanelTitle() }}</mat-panel-title>
     </mat-expansion-panel-header>
-
+    }
     <ng-content select="[accordionBody]"></ng-content>
   </mat-expansion-panel>
 </mat-accordion>
