@@ -28,4 +28,6 @@
   [dataTable]="superheroes()"
   [displayedColumns]="displayedColumns"
   (selectedRow)="selectHero($event)"
+  (rowToUpdate)="updateHero($event)"
+  (rowToDeleted)="removeHero($event)"
 ></app-table>

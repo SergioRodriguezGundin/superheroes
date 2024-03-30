@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild, effect, input, output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -6,7 +8,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule],
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,6 +19,10 @@ export class TableComponent<T> {
   displayedColumns = input<string[]>([]);
 
   selectedRow = output<T>();
+
+  rowToUpdate = output<T>();
+
+  rowToDeleted = output<T>();
 
   dataSource = new MatTableDataSource<T>([]);
 
@@ -37,6 +43,14 @@ export class TableComponent<T> {
 
   public selectRow(row: T) {
     this.selectedRow.emit(row);
+  }
+
+  public updateRow(row: T) {
+    this.rowToUpdate.emit(row);
+  }
+
+  public deleteRow(row: T) {
+    this.rowToDeleted.emit(row);
   }
 
   private listenToDataTable() {

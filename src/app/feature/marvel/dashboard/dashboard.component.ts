@@ -22,6 +22,8 @@ import { marvelSuperHeroesColumns } from '../models/marvel.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
+  private dialog = inject(MatDialog);
+
   private marvelService = inject(MarvelService);
 
   superheroes = this.marvelService.superheroes;
@@ -34,11 +36,9 @@ export class DashboardComponent {
 
   openAccordion = false;
 
-  constructor(public dialog: MatDialog) {
-    this.marvelService.getSuperHeroes();
-  }
 
   public addHeroFromDialog() {
+    this.openAccordion = false;
     const heroFormDialogRef = this.dialog.open(HeroFormComponent, {
       width: '700px',
       height: '600px',
@@ -65,6 +65,18 @@ export class DashboardComponent {
         actions: null,
       } as DialogInputs,
     })
+  }
+
+  public updateHero(hero: MarvelHero) {
+    //this.dialog.open(HeroFormComponent, {
+    //  data: hero,
+    //  width: '700px',
+    //  height: '600px',
+    //});
+  }
+
+  public removeHero(hero: MarvelHero) {
+    this.marvelService.removeHero(hero);
   }
 
   public applySearch(query: string[]) {
