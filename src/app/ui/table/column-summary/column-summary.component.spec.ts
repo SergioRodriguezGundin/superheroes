@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableComponent } from './table.component';
+import { ColumnSummaryComponent } from './column-summary.component';
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+describe('ColumnSummaryComponent', () => {
+  let component: ColumnSummaryComponent;
+  let fixture: ComponentFixture<ColumnSummaryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableComponent]
+      imports: [ColumnSummaryComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(ColumnSummaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

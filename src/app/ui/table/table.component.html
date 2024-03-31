@@ -3,25 +3,17 @@
     @for (column of displayedColumns(); track $index) {
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column">
-        @if (enabledCharts()) {
-        <div
-          class="table-header-container"
-          [ngStyle]="{ 'width.px': chartWidth }"
-        >
-          @if(chartData()[$index].length > 2) {
-          <app-bar-chart
+        <div class="column-header-cell">
+          <div class="column-header-cell__title">
+            <h4>{{ column }}</h4>
+          </div>
+          @if (enabledCharts()) {
+          <app-column-metrics
             [data]="chartData()[$index]"
-            (chartSize)="setChartSize($event)"
-          ></app-bar-chart>
-          } @else {
-          <app-pie-chart [data]="chartData()[$index]"></app-pie-chart>
+            [isFirstColumn]="$index === 0"
+          ></app-column-metrics>
           }
-
-          <h4>{{ column }}</h4>
         </div>
-        } @else {
-        <h4>{{ column }}</h4>
-        }
       </th>
       <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
     </ng-container>

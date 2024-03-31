@@ -1,17 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewChild, effect, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { BarChartComponent } from '../charts/bar-chart/bar-chart.component';
-import { CommonModule } from '@angular/common';
-import { PieChartComponent } from '../charts/pie-chart/pie-chart.component';
+import { ColumnMetricsComponent } from './column-metrics/column-metrics.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, BarChartComponent, PieChartComponent],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, ColumnMetricsComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,9 +39,6 @@ export class TableComponent<T> {
 
   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
 
-  //- chart styles
-  chartWidth = 120;
-
   constructor() {
     this.listenToDataTable();
   }
@@ -62,10 +58,6 @@ export class TableComponent<T> {
 
   public deleteRow(row: T) {
     this.rowToDeleted.emit(row);
-  }
-
-  public setChartSize(size: { width: number; height: number }) {
-    this.chartWidth = size.width;
   }
 
   private listenToDataTable() {

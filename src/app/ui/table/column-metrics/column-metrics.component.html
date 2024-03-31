@@ -1,0 +1,23 @@
+<div class="table-header-container" [ngStyle]="{ 'width.px': chartWidth }">
+  <ng-container *ngIf="isFirstColumn; else chart">
+    <app-column-summary
+      [title]="'Total entries'"
+      [totalEntries]="data().length"
+    ></app-column-summary>
+  </ng-container>
+
+  <ng-template #chart>
+    <ng-container *ngIf="data().length > 2; else pieChart">
+      <app-bar-chart
+        [data]="data()"
+        (chartSize)="setChartSize($event)"
+      ></app-bar-chart>
+    </ng-container>
+    <ng-template #pieChart>
+      <app-pie-chart
+        [data]="data()"
+        (chartSize)="setChartSize($event)"
+      ></app-pie-chart>
+    </ng-template>
+  </ng-template>
+</div>

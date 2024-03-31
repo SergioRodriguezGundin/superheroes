@@ -40,7 +40,7 @@ export class DashboardComponent {
 
   marvelSuperheroesChartsData = computed(() => {
     return [
-      this.marvelService.nameLabelData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.nameLabelData(),
       this.marvelService.genderData().sort((a, b) => (b.value - a.value)).slice(0, 8),
       this.marvelService.occupationData().sort((a, b) => (b.value - a.value)).slice(0, 8),
       this.marvelService.skillsData().sort((a, b) => (b.value - a.value)).slice(0, 8),
