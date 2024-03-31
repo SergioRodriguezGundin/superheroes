@@ -5,16 +5,18 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BarChartComponent } from '../charts/bar-chart/bar-chart.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, BarChartComponent],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, BarChartComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T> {
+  [x: string]: any;
   dataTable = input<T[]>([]);
 
   displayedColumns = input<string[]>([]);
@@ -33,8 +35,11 @@ export class TableComponent<T> {
 
   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
 
+  //- chart styles
+  chartWidth = 120;
+
   // - chart data example
-  chartData: { name: string; value: number }[] = [{ name: 'A', value: 10 }, { name: 'B', value: 20 }, { name: 'C', value: 30 }, { name: 'D', value: 40 }, { name: 'E', value: 50 }, { name: 'F', value: 60 }, { name: 'G', value: 70 }, { name: 'H', value: 80 }, { name: 'I', value: 90 }, { name: 'J', value: 100 }];
+  chartData: { name: string; value: number }[] = [{ name: 'A', value: 10 }, { name: 'B', value: 20 }, { name: 'C', value: 30 }, { name: 'D', value: 40 }, { name: 'E', value: 50 }];
 
   constructor() {
     this.listenToDataTable();
@@ -55,6 +60,10 @@ export class TableComponent<T> {
 
   public deleteRow(row: T) {
     this.rowToDeleted.emit(row);
+  }
+
+  public setChartSize(size: { width: number; height: number }) {
+    this.chartWidth = size.width;
   }
 
   private listenToDataTable() {

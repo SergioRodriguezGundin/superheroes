@@ -3,9 +3,9 @@
     cursor: pointer;
   }
 
-  //.mat-mdc-header-row {
-  //  background: var(--mat-app-background-color);
-  //}
+  .mat-mdc-header-row {
+    background: var(--mat-app-background-color);
+  }
 
   .mat-mdc-row {
     height: 65px;
@@ -23,14 +23,11 @@
   }
   
   .table-header-container {
-    background: var(--mat-app-background-color);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
-    padding: 14px;
-    width: 220px;
   }
 
   .table-actions {
