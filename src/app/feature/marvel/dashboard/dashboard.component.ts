@@ -32,7 +32,7 @@ export class DashboardComponent {
 
   superheroesNames = this.marvelService.superheroesNames;
 
-  heroSelected!: MarvelHero;
+  heroSelected: MarvelHero | null = null;
 
   displayedColumns: string[] = marvelSuperHeroesColumns;
 
@@ -40,6 +40,11 @@ export class DashboardComponent {
 
   public updateHero(hero: MarvelHero) {
     this.heroSelected = hero;
+    this.openAccordion = true;
+  }
+
+  public createHero() {
+    this.heroSelected = null;
     this.openAccordion = true;
   }
 
@@ -60,10 +65,12 @@ export class DashboardComponent {
 
   public storeNewHero(hero: MarvelHero) {
     this.marvelService.addSuperHero(hero);
+    this.openAccordion = false;
   }
 
   public storeUpdatedHero(hero: MarvelHero) {
     this.marvelService.updateSuperHero(hero);
+    this.openAccordion = false;
   }
 
   public applySearch(query: string[]) {

@@ -27,7 +27,8 @@ export class MarvelDB {
     this.dbStatus = indexedDB.open('marvel-db', 1);
 
     this.dbStatus.onupgradeneeded = (event: any) => {
-      this.db = event.target.result;
+      this.db = (event.target as IDBOpenDBRequest).result;
+      console.log('🚀 ~ MarvelDB ~ initDB ~ this.db:', this.db)
       this.createObjectStore();
     };
 
@@ -55,7 +56,7 @@ export class MarvelDB {
 
   private createObjectStore(): void {
     if (!this.db.objectStoreNames.contains(this.objectStoreName)) {
-      this.db.createObjectStore(this.objectStoreName, { keyPath: 'id' });
+      this.db.createObjectStore(this.objectStoreName);
     }
   }
 }

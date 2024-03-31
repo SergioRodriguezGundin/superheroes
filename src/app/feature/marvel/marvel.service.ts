@@ -31,6 +31,21 @@ export class MarvelService {
   }
 
   // - actions
+  public getSuperHeroes() {
+    this.marvelDBInstance.getSuperHeroes().onsuccess = (event: any) => {
+      const heroes = event.target.result;
+      if (heroes) {
+        this.initSuperHeroesStore(heroes);
+      } else {
+        this.httpClient.get<MarvelHero[]>(MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
+          heroes = this.getHeroesWithIds(heroes);
+          this.initSuperHeroesStore(heroes);
+          this.marvelDBInstance.saveSuperHeroes(this.superheroes());
+        });
+      }
+    }
+  }
+
   public addSuperHero(hero: MarvelHero) {
     hero = { ...hero, id: crypto.randomUUID() };
     this.superheroes.update((heroes) => [hero, ...heroes]);
@@ -66,21 +81,5 @@ export class MarvelService {
   private initSuperHeroesStore(state: MarvelHero[]) {
     this.superheroes.set(state);
     this.inmutableHeroes.set(state);
-  }
-
-  // - db
-  public getSuperHeroes() {
-    this.marvelDBInstance.getSuperHeroes().onsuccess = (event: any) => {
-      const heroes = event.target.result;
-      if (heroes) {
-        this.initSuperHeroesStore(heroes);
-      } else {
-        this.httpClient.get<MarvelHero[]>(MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
-          heroes = this.getHeroesWithIds(heroes);
-          this.initSuperHeroesStore(heroes);
-          this.marvelDBInstance.saveSuperHeroes(this.superheroes());
-        });
-      }
-    }
   }
 }

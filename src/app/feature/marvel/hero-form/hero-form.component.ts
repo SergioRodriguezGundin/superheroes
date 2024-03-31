@@ -20,7 +20,7 @@ export class HeroFormComponent {
 
   updateHero = output<MarvelHero>();
 
-  heroSelected = input<MarvelHero>();
+  heroSelected = input<MarvelHero | null>();
 
   heroForm = new FormGroup({
     nameLabel: new FormControl('', Validators.required),
@@ -43,6 +43,9 @@ export class HeroFormComponent {
       } else {
         this.addHero.emit(this.heroForm.value as MarvelHero);
       }
+      this.heroForm.reset({
+        genderLabel: 'male'
+      });
     }
   }
 
@@ -51,6 +54,11 @@ export class HeroFormComponent {
       const hero = this.heroSelected();
       if (hero) {
         this.heroForm.patchValue(hero);
+      } else {
+        this.heroForm.reset({
+          genderLabel: 'male',
+          nameLabel: '',
+        });
       }
     });
   }
