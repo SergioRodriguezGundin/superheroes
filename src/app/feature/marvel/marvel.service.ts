@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, WritableSignal, effect, inject, signal } from '@angular/core';
+import { Injectable, WritableSignal, computed, inject, signal } from '@angular/core';
 import { MarvelHero } from './interfaces/marvel.interface';
-
+import { MarvelDB } from '../../core/db/marvel-db';
 const MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 
 @Injectable(
@@ -12,40 +12,31 @@ export class MarvelService {
 
   superheroes: WritableSignal<MarvelHero[]> = signal([]);
 
-  superheroesNames: WritableSignal<string[]> = signal([]);
-
   inmutableHeroes: WritableSignal<MarvelHero[]> = signal([]);
 
+  superheroesNames = computed(() => this.superheroes().map(hero => hero.nameLabel));
+
+  superheroesCitizends = computed(() => this.superheroes().map(hero => hero.citizenshipLabel));
+
   // - db
-  private dbName = 'marvel-db';
-  private db!: IDBDatabase;
+  private marvelDBInstance: MarvelDB;
 
   constructor() {
-    const request = indexedDB.open(this.dbName, 1);
-
-    request.onupgradeneeded = (event) => {
-      this.db = (event.target as IDBOpenDBRequest).result;
-      this.db.createObjectStore('superheroes');
-    };
-
-    request.onsuccess = (event) => {
-      this.db = (event.target as IDBOpenDBRequest).result;
-      console.log('Database opened', this.db);
-      this.getSuperHeroes();
-    };
-
-    request.onerror = (event) => {
-      console.log('Database error: ' + (event.target as IDBOpenDBRequest).error);
-    };
+    this.marvelDBInstance = MarvelDB.getInstance();
+    this.marvelDBInstance.dbCreated.subscribe((dbCreated) => {
+      if (dbCreated) {
+        this.getSuperHeroes();
+      }
+    });
   }
 
   // - actions
   public addSuperHero(hero: MarvelHero) {
     hero = { ...hero, id: crypto.randomUUID() };
-    this.superheroes.update((heroes) => [...heroes, hero]);
+    this.superheroes.update((heroes) => [hero, ...heroes]);
 
     // - save in db
-    this.saveSuperHeros();
+    this.marvelDBInstance.saveSuperHeroes(this.superheroes());
   }
 
   public updateSuperHero(hero: MarvelHero) {
@@ -54,7 +45,7 @@ export class MarvelService {
     });
 
     // - save in db
-    this.saveSuperHeros();
+    this.marvelDBInstance.saveSuperHeroes(this.superheroes());
   }
 
   public removeHero(hero: MarvelHero) {
@@ -64,12 +55,7 @@ export class MarvelService {
     });
 
     // - save in db
-    this.saveSuperHeros();
-  }
-
-  // - other methods
-  private setSuperheroesNames(heroes: MarvelHero[]) {
-    this.superheroesNames.set(heroes.map(hero => hero.nameLabel));
+    this.marvelDBInstance.saveSuperHeroes(this.superheroes());
   }
 
   private getHeroesWithIds(heroes: MarvelHero[]) {
@@ -80,37 +66,21 @@ export class MarvelService {
   private initSuperHeroesStore(state: MarvelHero[]) {
     this.superheroes.set(state);
     this.inmutableHeroes.set(state);
-    this.setSuperheroesNames(this.superheroes());
   }
 
   // - db
   public getSuperHeroes() {
-    const transaction = this.db.transaction('superheroes', 'readonly');
-    const store = transaction.objectStore('superheroes');
-    const request = store.get('superheroes');
-
-    request.onsuccess = (event) => {
-      const heroes = (event.target as IDBRequest).result as MarvelHero[];
-
+    this.marvelDBInstance.getSuperHeroes().onsuccess = (event: any) => {
+      const heroes = event.target.result;
       if (heroes) {
-        this.initSuperHeroesStore(heroes)
+        this.initSuperHeroesStore(heroes);
       } else {
         this.httpClient.get<MarvelHero[]>(MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
           heroes = this.getHeroesWithIds(heroes);
           this.initSuperHeroesStore(heroes);
-          this.saveSuperHeros();
+          this.marvelDBInstance.saveSuperHeroes(this.superheroes());
         });
       }
-    };
-
-    request.onerror = (event) => {
-      console.log('Database error: ' + (event.target as IDBRequest).error);
-    };
-  }
-
-  private saveSuperHeros() {
-    const transaction = this.db.transaction('superheroes', 'readwrite');
-    const store = transaction.objectStore('superheroes');
-    store.put(this.superheroes(), 'superheroes');
+    }
   }
 }
