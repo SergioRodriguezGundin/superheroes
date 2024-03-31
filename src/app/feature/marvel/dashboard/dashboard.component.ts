@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { AccordionComponent } from '../../../ui/accordion/accordion.component';
-import { DialogComponent, DialogInputs } from '../../../ui/dialog/dialog.component';
-import { HeroComponent } from '../../../ui/hero/hero.component';
+import { DialogInputs } from '../../../ui/dialog/dialog.component';
+import { DialogService } from '../../../ui/dialog/dialog.service';
 import { SearchComponent } from '../../../ui/search/search.component';
 import { TableComponent } from '../../../ui/table/table.component';
 import { HeroFormComponent } from '../hero-form/hero-form.component';
 import { MarvelHero } from '../interfaces/marvel.interface';
 import { MarvelService } from '../marvel.service';
 import { marvelSuperHeroesColumns } from '../models/marvel.model';
+import { HeroComponent } from '../../../ui/hero/hero.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +22,7 @@ import { marvelSuperHeroesColumns } from '../models/marvel.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-  private dialog = inject(MatDialog);
+  private dialogService = inject(DialogService);
 
   private marvelService = inject(MarvelService);
 
@@ -32,60 +32,43 @@ export class DashboardComponent {
 
   superheroesNames = this.marvelService.superheroesNames;
 
+  heroSelected!: MarvelHero;
+
   displayedColumns: string[] = marvelSuperHeroesColumns;
 
   openAccordion = false;
 
-
-  public addHeroFromDialog() {
-    this.openAccordion = false;
-    const heroFormDialogRef = this.dialog.open(HeroFormComponent, {
-      width: '700px',
-      height: '600px',
-    });
-
-    heroFormDialogRef.componentInstance.heroSubmitted.subscribe((hero: MarvelHero) => {
-      this.storeNewHero(hero);
-      heroFormDialogRef.close();
-    });
-  }
-
-  public addHeroFromAccordion() {
-    this.openAccordion = !this.openAccordion;
+  public updateHero(hero: MarvelHero) {
+    this.heroSelected = hero;
+    this.openAccordion = true;
   }
 
   public selectHero(hero: MarvelHero) {
-    this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Hero Details',
-        content: {
-          component: HeroComponent,
-          inputs: { hero },
-        },
-        actions: null,
-      } as DialogInputs,
-    })
-  }
-
-  public updateHero(hero: MarvelHero) {
-    //this.dialog.open(HeroFormComponent, {
-    //  data: hero,
-    //  width: '700px',
-    //  height: '600px',
-    //});
+    this.dialogService.open({
+      title: 'Hero Details',
+      content: {
+        component: HeroComponent,
+        inputs: { hero },
+      },
+      actions: null,
+    } as DialogInputs);
   }
 
   public removeHero(hero: MarvelHero) {
     this.marvelService.removeHero(hero);
   }
 
+  public storeNewHero(hero: MarvelHero) {
+    this.marvelService.addSuperHero(hero);
+  }
+
+  public storeUpdatedHero(hero: MarvelHero) {
+    this.marvelService.updateSuperHero(hero);
+  }
+
   public applySearch(query: string[]) {
     const dataSource = this.filterDataSourceBySearch(query);
     this.superheroes.set(dataSource)
-  }
-
-  public storeNewHero(hero: MarvelHero) {
-    this.marvelService.addSuperHero(hero);
   }
 
   private filterDataSourceBySearch(query: string[]): MarvelHero[] {

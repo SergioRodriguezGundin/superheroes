@@ -41,13 +41,29 @@ export class MarvelService {
 
   // - actions
   public addSuperHero(hero: MarvelHero) {
-    this.updateSuperHeroesStore([hero, ...this.superheroes()]);
+    hero = { ...hero, id: crypto.randomUUID() };
+    this.superheroes.update((heroes) => [...heroes, hero]);
+
+    // - save in db
+    this.saveSuperHeros();
+  }
+
+  public updateSuperHero(hero: MarvelHero) {
+    this.superheroes.update((heroes) => {
+      return heroes.map((_hero) => (_hero.id === hero.id ? hero : _hero));
+    });
+
+    // - save in db
     this.saveSuperHeros();
   }
 
   public removeHero(hero: MarvelHero) {
-    const heroes = this.superheroes().filter(h => h.nameLabel !== hero.nameLabel);
-    this.updateSuperHeroesStore(heroes);
+
+    this.superheroes.update((heroes) => {
+      return heroes.filter((_hero) => _hero.id !== hero.id);
+    });
+
+    // - save in db
     this.saveSuperHeros();
   }
 
@@ -56,8 +72,12 @@ export class MarvelService {
     this.superheroesNames.set(heroes.map(hero => hero.nameLabel));
   }
 
-  // - store
-  private updateSuperHeroesStore(state: MarvelHero[]) {
+  private getHeroesWithIds(heroes: MarvelHero[]) {
+    return heroes.map((hero) => ({ ...hero, id: crypto.randomUUID() }));
+  }
+
+  // - init store signals()
+  private initSuperHeroesStore(state: MarvelHero[]) {
     this.superheroes.set(state);
     this.inmutableHeroes.set(state);
     this.setSuperheroesNames(this.superheroes());
@@ -73,10 +93,11 @@ export class MarvelService {
       const heroes = (event.target as IDBRequest).result as MarvelHero[];
 
       if (heroes) {
-        this.updateSuperHeroesStore(heroes)
+        this.initSuperHeroesStore(heroes)
       } else {
         this.httpClient.get<MarvelHero[]>(MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
-          this.updateSuperHeroesStore(heroes);
+          heroes = this.getHeroesWithIds(heroes);
+          this.initSuperHeroesStore(heroes);
           this.saveSuperHeros();
         });
       }

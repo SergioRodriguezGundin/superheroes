@@ -13,6 +13,10 @@ export default <Routes>[
             (c) => c.DashboardComponent,
           )
       },
+      {
+        path: '**',
+        redirectTo: '',
+      }
     ],
   },
 ]

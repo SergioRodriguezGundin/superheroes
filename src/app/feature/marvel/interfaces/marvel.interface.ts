@@ -71,6 +71,7 @@ type MarvelHeroSkillsType = keyof typeof MarvelHeroSkills;
 //}
 
 export interface MarvelHero {
+  id: string;
   citizenshipLabel: CountriesType;
   creatorLabel: string;
   genderLabel: MarvelHeroGenderType;

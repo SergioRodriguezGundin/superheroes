@@ -14,8 +14,8 @@
     *ngComponentOutlet="content.component; inputs: content?.inputs"
   ></ng-container>
 </mat-dialog-content>
+@if (actions) {
 <mat-dialog-actions>
-  @if (actions) {
   <ng-container *ngComponentOutlet="actions"></ng-container>
-  }
 </mat-dialog-actions>
+}

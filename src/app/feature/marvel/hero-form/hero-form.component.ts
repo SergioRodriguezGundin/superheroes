@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -16,7 +16,11 @@ import { MarvelHero } from '../interfaces/marvel.interface';
   styleUrl: './hero-form.component.scss'
 })
 export class HeroFormComponent {
-  heroSubmitted = output<MarvelHero>();
+  addHero = output<MarvelHero>();
+
+  updateHero = output<MarvelHero>();
+
+  heroSelected = input<MarvelHero>();
 
   heroForm = new FormGroup({
     nameLabel: new FormControl('', Validators.required),
@@ -25,12 +29,29 @@ export class HeroFormComponent {
     occupationLabel: new FormControl('', Validators.required),
     skillsLabel: new FormControl('', Validators.required),
     memberOfLabel: new FormControl('', Validators.required),
-    genderLabel: new FormControl('Male', Validators.required),
+    genderLabel: new FormControl('male', Validators.required),
   });
+
+  constructor() {
+    this.listenToHeroSelected();
+  }
 
   onSubmit() {
     if (this.heroForm.valid) {
-      this.heroSubmitted.emit(this.heroForm.value as MarvelHero);
+      if (this.heroSelected()) {
+        this.updateHero.emit({ ...this.heroForm.value, id: this.heroSelected()?.id } as MarvelHero);
+      } else {
+        this.addHero.emit(this.heroForm.value as MarvelHero);
+      }
     }
+  }
+
+  private listenToHeroSelected() {
+    effect(() => {
+      const hero = this.heroSelected();
+      if (hero) {
+        this.heroForm.patchValue(hero);
+      }
+    });
   }
 }
