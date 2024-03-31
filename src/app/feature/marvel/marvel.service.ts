@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, WritableSignal, computed, inject, signal } from '@angular/core';
-import { MarvelHero } from './interfaces/marvel.interface';
+import { MarvelHero, MarvelHeroType } from './interfaces/marvel.interface';
 import { MarvelDB } from '../../core/db/marvel-db';
 const MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 
@@ -16,7 +16,55 @@ export class MarvelService {
 
   superheroesNames = computed(() => this.superheroes().map(hero => hero.nameLabel));
 
-  superheroesCitizends = computed(() => this.superheroes().map(hero => hero.citizenshipLabel));
+
+  // - Marvel heroes chart data
+
+  superHeroesChartData = computed(() => {
+    const superheroes = this.superheroes();
+    const superHeroLabel: { [key in MarvelHeroType]: { [key: string]: number } } = {
+      id: {},
+      nameLabel: {},
+      citizenshipLabel: {},
+      creatorLabel: {},
+      genderLabel: {},
+      memberOfLabel: {},
+      occupationLabel: {},
+      skillsLabel: {},
+    };
+
+    superheroes.forEach(hero => {
+      Object.keys(hero).forEach((key) => {
+        if (!superHeroLabel[key as MarvelHeroType]) {
+          superHeroLabel[key as MarvelHeroType] = {};
+        }
+
+        if (!superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]]) {
+          superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]] = 0;
+        }
+        superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]]++;
+      });
+    });
+
+    return superHeroLabel;
+  });
+
+  private getChartData(label: MarvelHeroType) {
+    const heroesChartData = this.superHeroesChartData();
+    return Object.keys(heroesChartData[label]).map((key) => ({ name: key, value: heroesChartData[label][key] }));
+  }
+
+  citizensShipData = computed(() => this.getChartData('citizenshipLabel'));
+
+  genderData = computed(() => this.getChartData('genderLabel'));
+
+  occupationData = computed(() => this.getChartData('occupationLabel'));
+
+  skillsData = computed(() => this.getChartData('skillsLabel'));
+
+  creatorData = computed(() => this.getChartData('creatorLabel'));
+
+  memberOfData = computed(() => this.getChartData('memberOfLabel'));
+
 
   // - db
   private marvelDBInstance: MarvelDB;

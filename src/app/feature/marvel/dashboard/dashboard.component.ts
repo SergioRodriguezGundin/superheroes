@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { AccordionComponent } from '../../../ui/accordion/accordion.component';
 import { DialogInputs } from '../../../ui/dialog/dialog.component';
 import { DialogService } from '../../../ui/dialog/dialog.service';
+import { HeroComponent } from '../../../ui/hero/hero.component';
 import { SearchComponent } from '../../../ui/search/search.component';
 import { TableComponent } from '../../../ui/table/table.component';
 import { HeroFormComponent } from '../hero-form/hero-form.component';
 import { MarvelHero } from '../interfaces/marvel.interface';
 import { MarvelService } from '../marvel.service';
 import { marvelSuperHeroesColumns } from '../models/marvel.model';
-import { HeroComponent } from '../../../ui/hero/hero.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +37,15 @@ export class DashboardComponent {
   displayedColumns: string[] = marvelSuperHeroesColumns;
 
   openAccordion = false;
+
+  // -- chart data
+  citizensShipData: { name: string; value: number }[] = [];
+
+  //constructor() {
+  //  effect(() => {
+  //    this.citizensShipData = this.marvelService.citizensShipData();
+  //  });
+  //}
 
   public updateHero(hero: MarvelHero) {
     this.heroSelected = hero;

@@ -3,11 +3,34 @@
     cursor: pointer;
   }
 
+  //.mat-mdc-header-row {
+  //  background: var(--mat-app-background-color);
+  //}
+
   .mat-mdc-row {
     height: 65px;
     &:hover {
       background: var(--mat-table-row-item-outline-color)
     }
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow: auto;
+  }
+  
+  .table-header-container {
+    background: var(--mat-app-background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    padding: 14px;
+    width: 220px;
   }
 
   .table-actions {

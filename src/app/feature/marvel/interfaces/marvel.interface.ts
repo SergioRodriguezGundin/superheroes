@@ -30,7 +30,7 @@ export enum MarvelHeroOccupation {
 }
 type MarvelHeroOccupationType = keyof typeof MarvelHeroOccupation;
 
-export enum Countries {
+export enum Citizens {
   'Principality of Wallachia',
   'United Kingdom',
   'United States of America',
@@ -41,7 +41,7 @@ export enum Countries {
   Russia,
   Wakanda,
 }
-type CountriesType = keyof typeof Countries;
+type CitizensType = keyof typeof Citizens;
 
 export enum MarvelHeroSkills {
   'energy blasts',
@@ -70,9 +70,22 @@ type MarvelHeroSkillsType = keyof typeof MarvelHeroSkills;
 //  skillsLabel: MarvelHeroSkillsType;
 //}
 
+export enum MarvelHeroProperties {
+  id,
+  citizenshipLabel,
+  creatorLabel,
+  genderLabel,
+  memberOfLabel,
+  nameLabel,
+  occupationLabel,
+  skillsLabel,
+}
+
+export type MarvelHeroType = keyof typeof MarvelHeroProperties;
+
 export interface MarvelHero {
   id: string;
-  citizenshipLabel: CountriesType;
+  citizenshipLabel: CitizensType;
   creatorLabel: string;
   genderLabel: MarvelHeroGenderType;
   memberOfLabel: string;

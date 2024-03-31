@@ -4,11 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { BarChartComponent } from '../charts/bar-chart/bar-chart.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, BarChartComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +32,9 @@ export class TableComponent<T> {
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
+
+  // - chart data example
+  chartData: { name: string; value: number }[] = [{ name: 'A', value: 10 }, { name: 'B', value: 20 }, { name: 'C', value: 30 }, { name: 'D', value: 40 }, { name: 'E', value: 50 }, { name: 'F', value: 60 }, { name: 'G', value: 70 }, { name: 'H', value: 80 }, { name: 'I', value: 90 }, { name: 'J', value: 100 }];
 
   constructor() {
     this.listenToDataTable();
