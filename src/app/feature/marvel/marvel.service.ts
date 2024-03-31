@@ -53,6 +53,8 @@ export class MarvelService {
     return Object.keys(heroesChartData[label]).map((key) => ({ name: key, value: heroesChartData[label][key] }));
   }
 
+  nameLabelData = computed(() => this.getChartData('nameLabel'));
+
   citizensShipData = computed(() => this.getChartData('citizenshipLabel'));
 
   genderData = computed(() => this.getChartData('genderLabel'));

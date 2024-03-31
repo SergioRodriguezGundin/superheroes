@@ -6,11 +6,12 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BarChartComponent } from '../charts/bar-chart/bar-chart.component';
 import { CommonModule } from '@angular/common';
+import { PieChartComponent } from '../charts/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, BarChartComponent],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, BarChartComponent, PieChartComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +21,10 @@ export class TableComponent<T> {
   dataTable = input<T[]>([]);
 
   displayedColumns = input<string[]>([]);
+
+  enabledCharts = input<boolean>(true);
+
+  chartData = input<{ name: string; value: number }[][]>([]);
 
   selectedRow = output<T>();
 
@@ -37,9 +42,6 @@ export class TableComponent<T> {
 
   //- chart styles
   chartWidth = 120;
-
-  // - chart data example
-  chartData: { name: string; value: number }[] = [{ name: 'A', value: 10 }, { name: 'B', value: 20 }, { name: 'C', value: 30 }, { name: 'D', value: 40 }, { name: 'E', value: 50 }];
 
   constructor() {
     this.listenToDataTable();

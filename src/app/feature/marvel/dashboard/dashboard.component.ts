@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, WritableSignal, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -38,14 +38,17 @@ export class DashboardComponent {
 
   openAccordion = false;
 
-  // -- chart data
-  citizensShipData: { name: string; value: number }[] = [];
-
-  //constructor() {
-  //  effect(() => {
-  //    this.citizensShipData = this.marvelService.citizensShipData();
-  //  });
-  //}
+  marvelSuperheroesChartsData = computed(() => {
+    return [
+      this.marvelService.nameLabelData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.genderData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.occupationData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.skillsData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.citizensShipData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.creatorData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.memberOfData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+    ]
+  })
 
   public updateHero(hero: MarvelHero) {
     this.heroSelected = hero;

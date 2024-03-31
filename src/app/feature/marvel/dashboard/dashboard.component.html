@@ -23,6 +23,8 @@
 <app-table
   [dataTable]="superheroes()"
   [displayedColumns]="displayedColumns"
+  [enabledCharts]="true"
+  [chartData]="marvelSuperheroesChartsData()"
   (selectedRow)="selectHero($event)"
   (rowToUpdate)="updateHero($event)"
   (rowToDeleted)="removeHero($event)"
