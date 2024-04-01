@@ -16,11 +16,13 @@ import { MarvelHero } from '../interfaces/marvel.interface';
   styleUrl: './hero-form.component.scss'
 })
 export class HeroFormComponent {
+  heroSelected = input<MarvelHero | null>();
+
   addHero = output<MarvelHero>();
 
   updateHero = output<MarvelHero>();
 
-  heroSelected = input<MarvelHero | null>();
+  cancelFormEvent = output<void>();
 
   heroForm = new FormGroup({
     nameLabel: new FormControl('', Validators.required),
@@ -47,6 +49,10 @@ export class HeroFormComponent {
         genderLabel: 'male'
       });
     }
+  }
+
+  public cancelForm() {
+    this.cancelFormEvent.emit();
   }
 
   private listenToHeroSelected() {

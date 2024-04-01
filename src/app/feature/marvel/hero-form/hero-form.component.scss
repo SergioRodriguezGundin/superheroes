@@ -18,5 +18,12 @@
         justify-content: flex-start;
       }
     }
+    &-actions {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
  } 
 }

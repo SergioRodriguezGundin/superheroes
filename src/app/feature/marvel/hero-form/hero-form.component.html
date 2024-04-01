@@ -61,5 +61,8 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="primary" type="submit">Submit</button>
+  <div class="hero-form-actions">
+    <button mat-button color="secondary" (click)="cancelForm()">cancel</button>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </div>
 </form>

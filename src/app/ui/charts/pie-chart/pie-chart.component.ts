@@ -90,6 +90,7 @@ export class PieChartComponent {
       .duration(350)
       .attr('transform', (d: any) => `translate(${arc.centroid(d)})`)
       .attr('text-anchor', 'middle')
+      .style('fill', () => 'var(--mat-badge-text-color)')
       .text((d: any) => d.data.name);
 
     text.exit()
