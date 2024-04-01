@@ -30,7 +30,7 @@ export class PieChartComponent {
 
   private radius: number = Math.min(this.width, this.height) / 2;
 
-  hasChartUpdate: boolean = false;
+  updateChart: boolean = false;
 
   currentAngle: number = 0;
 
@@ -42,12 +42,12 @@ export class PieChartComponent {
     effect(() => {
       const newChartData = this.data();
 
-      if (this.hasChartUpdate) {
+      if (this.updateChart) {
         this.updatePieChart();
       } else {
         if (newChartData?.length) {
           this.createPieChart();
-          this.hasChartUpdate = true;
+          this.updateChart = true;
         }
       }
 

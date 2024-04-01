@@ -7,7 +7,7 @@
           <div class="column-header-cell__title">
             <h4>{{ column }}</h4>
           </div>
-          @if (enabledCharts()) {
+          @if (enabledCharts() && chartData().length) {
           <app-column-metrics
             [data]="chartData()[$index]"
             [columnIndex]="$index"
@@ -20,7 +20,7 @@
     </ng-container>
     }
 
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions" stickyEnd>
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
         <div class="table-actions">

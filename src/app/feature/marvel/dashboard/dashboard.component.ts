@@ -26,13 +26,11 @@ export class DashboardComponent {
 
   private marvelService = inject(MarvelService);
 
-  superheroes = this.marvelService.superheroes;
+  heroes = this.marvelService.heroes;
 
-  stateHeroes = this.marvelService.stateHeroes;
+  heroNames = this.marvelService.heroNames;
 
-  superheroesNames = this.marvelService.superheroesNames;
-
-  stateSuperheroesNames = this.marvelService.stateHeroesNames;
+  heroNamesBackup = this.marvelService.heroNamesBackup;
 
   heroSelected: MarvelHero | null = null;
 
@@ -40,17 +38,13 @@ export class DashboardComponent {
 
   openAccordion = false;
 
-  marvelSuperheroesChartsData = computed(() => {
-    return [
-      this.marvelService.nameLabelData(),
-      this.marvelService.genderData().sort((a, b) => (b.value - a.value)),
-      this.marvelService.occupationData().sort((a, b) => (b.value - a.value)),
-      this.marvelService.skillsData().sort((a, b) => (b.value - a.value)),
-      this.marvelService.creatorData().sort((a, b) => (b.value - a.value)),
-      this.marvelService.citizensShipData().sort((a, b) => (b.value - a.value)),
-      this.marvelService.memberOfData().sort((a, b) => (b.value - a.value)),
-    ]
-  })
+  marvelSuperheroesChartsData: { name: string; value: number }[][] = [];
+
+  constructor() {
+    effect(() => {
+      this.marvelSuperheroesChartsData = this.marvelService.heroChartData();
+    });
+  }
 
   public updateHero(hero: MarvelHero) {
     this.heroSelected = hero;
@@ -87,18 +81,7 @@ export class DashboardComponent {
     this.openAccordion = false;
   }
 
-  // TODO: move that functions to store
-
   public applySearch(query: string[]) {
-    const dataSource = this.filterDataSourceBySearch(query);
-    this.superheroes.set(dataSource)
-  }
-
-  private filterDataSourceBySearch(query: string[]): MarvelHero[] {
-    if (!query.length) {
-      return this.stateHeroes();
-    }
-
-    return this.stateHeroes().filter(hero => query.includes(hero.nameLabel.toLowerCase()) || query.includes(hero.nameLabel));
+    this.marvelService.filterHeroesByName(query);
   }
 }

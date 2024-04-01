@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, WritableSignal, computed, inject, signal } from '@angular/core';
-import { MarvelHero, MarvelHeroType } from './interfaces/marvel.interface';
+import { Injectable, inject } from '@angular/core';
 import { MarvelDB } from '../../core/db/marvel-db';
+import { MarvelHero } from './interfaces/marvel.interface';
+import { MarvelStoreService } from './store/marvel-store.service';
 const MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 
 @Injectable(
@@ -10,64 +11,16 @@ const MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 export class MarvelService {
   private httpClient = inject(HttpClient);
 
-  superheroes: WritableSignal<MarvelHero[]> = signal([]);
+  private marvelStoreService = inject(MarvelStoreService);
 
-  stateHeroes: WritableSignal<MarvelHero[]> = signal([]);
+  // - expose signals
+  heroes = this.marvelStoreService.heroes;
 
-  superheroesNames = computed(() => this.superheroes().map(hero => hero.nameLabel));
+  heroNames = this.marvelStoreService.heroNames;
 
-  stateHeroesNames: WritableSignal<string[]> = signal([]);
+  heroNamesBackup = this.marvelStoreService.heroNamesBackup;
 
-  // - Marvel heroes chart data
-
-  superHeroesChartData = computed(() => {
-    const superheroes = this.superheroes();
-    const superHeroLabel: { [key in MarvelHeroType]: { [key: string]: number } } = {
-      id: {},
-      nameLabel: {},
-      citizenshipLabel: {},
-      creatorLabel: {},
-      genderLabel: {},
-      memberOfLabel: {},
-      occupationLabel: {},
-      skillsLabel: {},
-    };
-
-    superheroes.forEach(hero => {
-      Object.keys(hero).forEach((key) => {
-        if (!superHeroLabel[key as MarvelHeroType]) {
-          superHeroLabel[key as MarvelHeroType] = {};
-        }
-
-        if (!superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]]) {
-          superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]] = 0;
-        }
-        superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]]++;
-      });
-    });
-
-    return superHeroLabel;
-  });
-
-  private getChartData(label: MarvelHeroType) {
-    const heroesChartData = this.superHeroesChartData();
-    return Object.keys(heroesChartData[label]).map((key) => ({ name: key, value: heroesChartData[label][key] }));
-  }
-
-  nameLabelData = computed(() => this.getChartData('nameLabel'));
-
-  citizensShipData = computed(() => this.getChartData('citizenshipLabel'));
-
-  genderData = computed(() => this.getChartData('genderLabel'));
-
-  occupationData = computed(() => this.getChartData('occupationLabel'));
-
-  skillsData = computed(() => this.getChartData('skillsLabel'));
-
-  creatorData = computed(() => this.getChartData('creatorLabel'));
-
-  memberOfData = computed(() => this.getChartData('memberOfLabel'));
-
+  heroChartData = this.marvelStoreService.heroesChartData;
 
   // - db
   private marvelDBInstance: MarvelDB;
@@ -86,63 +39,43 @@ export class MarvelService {
     this.marvelDBInstance.getSuperHeroes().onsuccess = (event: any) => {
       const heroes = event.target.result;
       if (heroes) {
-        this.initSuperHeroesStore(heroes);
+        this.setSuperHeroes(heroes);
       } else {
         this.httpClient.get<MarvelHero[]>(MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
           heroes = this.getHeroesWithIds(heroes);
-          this.initSuperHeroesStore(heroes);
-          this.marvelDBInstance.saveSuperHeroes(this.superheroes());
+          this.setSuperHeroes(heroes);
+          this.marvelDBInstance.saveSuperHeroes(heroes);
         });
       }
     }
   }
 
+  // - actions
+  public setSuperHeroes(state: MarvelHero[]) {
+    this.marvelStoreService.addHeroes(state);
+  }
+
   public addSuperHero(hero: MarvelHero) {
-    hero = { ...hero, id: crypto.randomUUID() };
-    this.superheroes.update((heroes) => [hero, ...heroes]);
-
-    // - update state
-    this.stateHeroes.set(this.superheroes());
-    this.stateHeroesNames.set(this.superheroes().map(hero => hero.nameLabel));
-
-    // - save in db
-    this.marvelDBInstance.saveSuperHeroes(this.superheroes());
+    this.marvelStoreService.addHero(hero);
+    this.marvelDBInstance.saveSuperHeroes(this.marvelStoreService.heroes());
   }
 
   public updateSuperHero(hero: MarvelHero) {
-    this.superheroes.update((heroes) => {
-      return heroes.map((_hero) => (_hero.id === hero.id ? hero : _hero));
-    });
-
-    // - update state
-    this.stateHeroes.set(this.superheroes());
-    this.stateHeroesNames.set(this.superheroes().map(hero => hero.nameLabel));
-
-    // - save in db
-    this.marvelDBInstance.saveSuperHeroes(this.superheroes());
+    this.marvelStoreService.updateHero(hero);
+    this.marvelDBInstance.saveSuperHeroes(this.marvelStoreService.heroes());
   }
 
   public removeHero(hero: MarvelHero) {
-    this.superheroes.update((heroes) => {
-      return heroes.filter((_hero) => _hero.id !== hero.id);
-    });
-
-    // - update state
-    this.stateHeroes.set(this.superheroes());
-    this.stateHeroesNames.set(this.superheroes().map(hero => hero.nameLabel));
-
-    // - save in db
-    this.marvelDBInstance.saveSuperHeroes(this.superheroes());
+    this.marvelStoreService.removeHero(hero.id);
+    this.marvelDBInstance.saveSuperHeroes(this.marvelStoreService.heroes());
   }
 
+  public filterHeroesByName(query: string[]) {
+    this.marvelStoreService.filterHeroesByNames(query)
+  }
+
+  // - utilities functions
   private getHeroesWithIds(heroes: MarvelHero[]) {
     return heroes.map((hero) => ({ ...hero, id: crypto.randomUUID() }));
-  }
-
-  // - init store signals()
-  private initSuperHeroesStore(state: MarvelHero[]) {
-    this.superheroes.set(state);
-    this.stateHeroes.set(state);
-    this.stateHeroesNames.set(state.map(hero => hero.nameLabel));
   }
 }
