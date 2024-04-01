@@ -9,5 +9,9 @@ export const routes: Routes = [
   {
     path: 'marvel',
     loadChildren: () => import('./feature/marvel/marvel.routes')
+  },
+  {
+    path: '**',
+    redirectTo: 'marvel',
   }
 ];

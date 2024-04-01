@@ -1,8 +1,39 @@
-<article class="hero">
-  <h3>{{ hero()?.nameLabel }}</h3>
-  <p>{{ hero()?.skillsLabel }}</p>
-  <p>{{ hero()?.genderLabel }}</p>
-  <p>{{ hero()?.citizenshipLabel }}</p>
-  <p>{{ hero()?.creatorLabel }}</p>
-  <p>{{ hero()?.occupationLabel }}</p>
-</article>
+<mat-card class="hero">
+  <mat-card-header>
+    <div mat-card-avatar class="hero-avatar"></div>
+    <mat-card-title class="hero-title">{{ hero()?.nameLabel }}</mat-card-title>
+    <mat-card-subtitle> Marvel Universe </mat-card-subtitle>
+  </mat-card-header>
+  <div class="hero-image">
+    <div class="hero-image-cover"></div>
+    <img
+      mat-card-image
+      src="assets/images/marvel/marvel-bg-card.webp"
+      alt="Marvel Universe logo"
+    />
+  </div>
+  <mat-card-content class="hero-content">
+    @if (hero()?.nameLabel) {
+    <mat-chip
+      [style.backgroundColor]="
+        (hero()?.skillsLabel | heroPowerChipPipe).backgroundColor
+      "
+    >
+      {{ (hero()?.skillsLabel | heroPowerChipPipe).label }}
+      {{ (hero()?.skillsLabel | heroPowerChipPipe).emoji }}
+    </mat-chip>
+    } @if (hero()?.genderLabel) {
+    <mat-chip
+      [style.backgroundColor]="
+        (hero()?.genderLabel | heroGenderPipe).backgroundColor
+      "
+    >
+      {{ (hero()?.genderLabel | heroGenderPipe).label }}
+      {{ (hero()?.genderLabel | heroGenderPipe).emoji }}
+    </mat-chip>
+    }
+    <p>{{ hero()?.citizenshipLabel }}</p>
+    <p>{{ hero()?.creatorLabel }}</p>
+    <p>{{ hero()?.occupationLabel }}</p>
+  </mat-card-content>
+</mat-card>

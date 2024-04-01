@@ -1,12 +1,41 @@
 :host {
   .hero {
-    min-width: 320px;
-    width: 100%;
-    height: 100%;
-
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+
+    box-shadow: none;
+    max-width: 400px;
+    width: 100%;
+    height: 100%;
+    &-avatar {
+      background-image: url('/assets/images/marvel/marvel-icon-card.webp');
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 48px;
+      width: 48px;
+      
+    }
+    &-image {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      &-cover {
+        position: absolute;
+        background-image: linear-gradient(to top, #04000f 30%, transparent 100%);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+      }
+    }
+    &-content {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      z-index: 2;
+    }
   }
 }

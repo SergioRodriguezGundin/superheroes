@@ -58,7 +58,7 @@ export class DashboardComponent {
 
   public selectHero(hero: MarvelHero) {
     this.dialogService.open({
-      title: 'Hero Details',
+      title: '',
       content: {
         component: HeroComponent,
         inputs: { hero },
