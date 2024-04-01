@@ -17,6 +17,7 @@
     <ng-template #pieChart>
       <app-pie-chart
         [data]="data()"
+        [chartId]="columnIndex()"
         (chartSize)="setChartSize($event)"
       ></app-pie-chart>
     </ng-template>
