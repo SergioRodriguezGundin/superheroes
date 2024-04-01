@@ -16,6 +16,7 @@ export class MarvelService {
 
   superheroesNames = computed(() => this.superheroes().map(hero => hero.nameLabel));
 
+  inmutableHeroesNames: WritableSignal<string[]> = signal([]);
 
   // - Marvel heroes chart data
 
@@ -131,5 +132,6 @@ export class MarvelService {
   private initSuperHeroesStore(state: MarvelHero[]) {
     this.superheroes.set(state);
     this.inmutableHeroes.set(state);
+    this.inmutableHeroesNames.set(state.map(hero => hero.nameLabel));
   }
 }

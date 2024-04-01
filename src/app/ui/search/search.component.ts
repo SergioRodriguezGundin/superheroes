@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, Output, ViewChild, effect, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -20,9 +20,11 @@ export class SearchComponent {
 
   searchItems = input<string[]>([]);
 
-  queryCtrl = signal<string>('');
+  inmutableItems = input<string[]>([]);
 
   search = output<string[]>();
+
+  queryCtrl = signal<string>('');
 
   records: string[] = []
 
@@ -37,13 +39,13 @@ export class SearchComponent {
   private filteredRecordsByQuery() {
     effect(() => {
       const valueToSearch = this.queryCtrl();
-      this.filteredRecords = valueToSearch ? this._filter(valueToSearch) : this.searchItems();
+      this.filteredRecords = valueToSearch ? this._filter(valueToSearch) : this.inmutableItems();
     })
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.searchItems().filter(record => record.toLowerCase().includes(filterValue));
+    return this.inmutableItems().filter(record => record.toLowerCase().includes(filterValue));
   }
 
   private sendQuery() {

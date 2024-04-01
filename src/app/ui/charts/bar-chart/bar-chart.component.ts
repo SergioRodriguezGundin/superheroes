@@ -10,17 +10,17 @@ import * as d3 from 'd3';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BarChartComponent {
+  @ViewChild('barChartContainer', { static: true })
+  barChartContainer!: ElementRef;
+
   private width: number = 0;
 
   private height: number = 0;
 
   chartSize = output<{ width: number; height: number }>();
 
-  // TODO: @SergioRodriguezGundin - replace for T generic type
   data = input<{ name: string; value: number }[]>([]);
 
-  @ViewChild('barChartContainer', { static: true })
-  barChartContainer!: ElementRef;
 
   constructor() {
     effect(() => {

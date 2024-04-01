@@ -32,6 +32,8 @@ export class DashboardComponent {
 
   superheroesNames = this.marvelService.superheroesNames;
 
+  inmutableHeroesNames = this.marvelService.inmutableHeroesNames;
+
   heroSelected: MarvelHero | null = null;
 
   displayedColumns: string[] = marvelSuperHeroesColumns;
@@ -44,8 +46,8 @@ export class DashboardComponent {
       this.marvelService.genderData().sort((a, b) => (b.value - a.value)).slice(0, 8),
       this.marvelService.occupationData().sort((a, b) => (b.value - a.value)).slice(0, 8),
       this.marvelService.skillsData().sort((a, b) => (b.value - a.value)).slice(0, 8),
-      this.marvelService.citizensShipData().sort((a, b) => (b.value - a.value)).slice(0, 8),
       this.marvelService.creatorData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.citizensShipData().sort((a, b) => (b.value - a.value)).slice(0, 8),
       this.marvelService.memberOfData().sort((a, b) => (b.value - a.value)).slice(0, 8),
     ]
   })
