@@ -11,19 +11,21 @@ export class PieChartComponent {
   @ViewChild('pieChartContainer', { static: true })
   barChartContainer!: ElementRef;
 
+  data = input<{ name: string; value: number }[]>([]);
+
+  chartSize = output<{ width: number; height: number }>();
+
   private width: number = 185;
 
   private height: number = 185;
 
   private svg: any;
 
+  private arc!: d3.Arc<any, { name: string; value: number; }>;
+
   private radius: number = Math.min(this.width, this.height) / 2;
 
   hasChartUpdate: boolean = false;
-
-  data = input<{ name: string; value: number }[]>([]);
-
-  chartSize = output<{ width: number; height: number }>();
 
   currentAngle: number = 0;
 
@@ -64,7 +66,7 @@ export class PieChartComponent {
     const pie = d3.pie<{ name: string; value: number }>().value(d => d.value);
 
     // Created arc for the pie chart
-    const arc = d3.arc()
+    this.arc = d3.arc<any, { name: string; value: number }>()
       .outerRadius(this.radius - 10)
       .innerRadius(0)
 
@@ -76,8 +78,16 @@ export class PieChartComponent {
     update.enter()
       .append('path')
       .merge(update)
-      .attr('d', arc)
+      .transition()
+      .duration(750)
+      .attrTween('d', (d: any) => this.arcTween(d))
       .attr('fill', (d: any, i: number) => color(i.toString()));
+
+    update.exit()
+      .transition()
+      .duration(750)
+      .attrTween('d', (d: any) => this.arcTween(d))
+      .remove();
 
     // Add text labels to the arcs
     const text = this.svg.selectAll('text')
@@ -87,38 +97,31 @@ export class PieChartComponent {
       .append('text')
       .merge(text)
       .transition()
-      .duration(350)
-      .attr('transform', (d: any) => `translate(${arc.centroid(d)})`)
+      .duration(750)
+      .attr('transform', (d: any) => `translate(${this.arc.centroid(d)})`)
       .attr('text-anchor', 'middle')
       .style('fill', () => 'var(--mat-badge-text-color)')
       .text((d: any) => d.data.name);
 
     text.exit()
       .transition()
-      .duration(0)
-      .attr('transform', (d: any) => `translate(${arc.centroid(d)})`)
-      .remove();
-
-    update.exit()
-      .transition()
-      .duration(0)
-      .attrTween('d', (d: any) => this.arcTween(d, arc))
+      .duration(750)
+      .attr('transform', (d: any) => `translate(${this.arc.centroid(d)})`)
       .remove();
   }
 
-  // TODO: @SergioRodriguezGundin: review. this.currentAngle
-  private arcTween(a: any, path: any) {
+  private arcTween(a: any) {
     const i = d3.interpolate(this.currentAngle, a.startAngle);
     this.currentAngle = a.startAngle;
-    return (t: number) => path(({ startAngle: i(t), endAngle: i(t) + a.endAngle - a.startAngle } as any));
+
+    return (t: number) => {
+      a.startAngle = i(t);
+      a.endAngle = i(t) + a.endAngle - a.startAngle;
+      return this.arc(a);
+    };
   }
 
   private getChartColors() {
-    let color: d3.ScaleOrdinal<string, string> = d3.scaleOrdinal(d3.schemeCategory10);
-    if (this.data().length <= 2) {
-      color = d3.scaleOrdinal(['var(--mdc-switch-selected-focus-state-layer-color)', 'var(--mdc-switch-selected-track-color)']);
-    }
-
-    return color
+    return d3.scaleOrdinal(d3.schemeTableau10);
   }
 }

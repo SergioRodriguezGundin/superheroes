@@ -43,12 +43,12 @@ export class DashboardComponent {
   marvelSuperheroesChartsData = computed(() => {
     return [
       this.marvelService.nameLabelData(),
-      this.marvelService.genderData().sort((a, b) => (b.value - a.value)).slice(0, 8),
-      this.marvelService.occupationData().sort((a, b) => (b.value - a.value)).slice(0, 8),
-      this.marvelService.skillsData().sort((a, b) => (b.value - a.value)).slice(0, 8),
-      this.marvelService.creatorData().sort((a, b) => (b.value - a.value)).slice(0, 8),
-      this.marvelService.citizensShipData().sort((a, b) => (b.value - a.value)).slice(0, 8),
-      this.marvelService.memberOfData().sort((a, b) => (b.value - a.value)).slice(0, 8),
+      this.marvelService.genderData().sort((a, b) => (b.value - a.value)),
+      this.marvelService.occupationData().sort((a, b) => (b.value - a.value)),
+      this.marvelService.skillsData().sort((a, b) => (b.value - a.value)),
+      this.marvelService.creatorData().sort((a, b) => (b.value - a.value)),
+      this.marvelService.citizensShipData().sort((a, b) => (b.value - a.value)),
+      this.marvelService.memberOfData().sort((a, b) => (b.value - a.value)),
     ]
   })
 

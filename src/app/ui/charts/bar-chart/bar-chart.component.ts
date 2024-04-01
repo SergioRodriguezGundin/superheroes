@@ -94,7 +94,7 @@ export class BarChartComponent {
       .attr('width', this.x.bandwidth())
       .attr('y', (d: { name: string; value: number }) => this.y(d.value))
       .attr('height', (d: { name: string; value: number }) => this.height - this.y(d.value))
-      .attr('fill', 'var(--mdc-switch-selected-focus-state-layer-color)');
+      .attr('fill', (d: any, i: number) => d3.schemeTableau10[i]);
 
     update.exit()
       .transition()
