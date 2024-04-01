@@ -12,11 +12,11 @@ export class MarvelService {
 
   superheroes: WritableSignal<MarvelHero[]> = signal([]);
 
-  inmutableHeroes: WritableSignal<MarvelHero[]> = signal([]);
+  stateHeroes: WritableSignal<MarvelHero[]> = signal([]);
 
   superheroesNames = computed(() => this.superheroes().map(hero => hero.nameLabel));
 
-  superHeroesNamesPersisted: WritableSignal<string[]> = signal([]);
+  stateHeroesNames: WritableSignal<string[]> = signal([]);
 
   // - Marvel heroes chart data
 
@@ -101,7 +101,9 @@ export class MarvelService {
     hero = { ...hero, id: crypto.randomUUID() };
     this.superheroes.update((heroes) => [hero, ...heroes]);
 
-    this.superHeroesNamesPersisted.set(this.superheroes().map(hero => hero.nameLabel));
+    // - update state
+    this.stateHeroes.set(this.superheroes());
+    this.stateHeroesNames.set(this.superheroes().map(hero => hero.nameLabel));
 
     // - save in db
     this.marvelDBInstance.saveSuperHeroes(this.superheroes());
@@ -112,7 +114,9 @@ export class MarvelService {
       return heroes.map((_hero) => (_hero.id === hero.id ? hero : _hero));
     });
 
-    this.superHeroesNamesPersisted.set(this.superheroes().map(hero => hero.nameLabel));
+    // - update state
+    this.stateHeroes.set(this.superheroes());
+    this.stateHeroesNames.set(this.superheroes().map(hero => hero.nameLabel));
 
     // - save in db
     this.marvelDBInstance.saveSuperHeroes(this.superheroes());
@@ -123,7 +127,9 @@ export class MarvelService {
       return heroes.filter((_hero) => _hero.id !== hero.id);
     });
 
-    this.superHeroesNamesPersisted.set(this.superheroes().map(hero => hero.nameLabel));
+    // - update state
+    this.stateHeroes.set(this.superheroes());
+    this.stateHeroesNames.set(this.superheroes().map(hero => hero.nameLabel));
 
     // - save in db
     this.marvelDBInstance.saveSuperHeroes(this.superheroes());
@@ -136,7 +142,7 @@ export class MarvelService {
   // - init store signals()
   private initSuperHeroesStore(state: MarvelHero[]) {
     this.superheroes.set(state);
-    this.inmutableHeroes.set(state);
-    this.superHeroesNamesPersisted.set(state.map(hero => hero.nameLabel));
+    this.stateHeroes.set(state);
+    this.stateHeroesNames.set(state.map(hero => hero.nameLabel));
   }
 }

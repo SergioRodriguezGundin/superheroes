@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, WritableSignal, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -28,11 +28,11 @@ export class DashboardComponent {
 
   superheroes = this.marvelService.superheroes;
 
-  inmutableHeroes = this.marvelService.inmutableHeroes;
+  stateHeroes = this.marvelService.stateHeroes;
 
   superheroesNames = this.marvelService.superheroesNames;
 
-  superHeroesNamesPersisted = this.marvelService.superHeroesNamesPersisted;
+  stateSuperheroesNames = this.marvelService.stateHeroesNames;
 
   heroSelected: MarvelHero | null = null;
 
@@ -87,6 +87,8 @@ export class DashboardComponent {
     this.openAccordion = false;
   }
 
+  // TODO: move that functions to store
+
   public applySearch(query: string[]) {
     const dataSource = this.filterDataSourceBySearch(query);
     this.superheroes.set(dataSource)
@@ -94,9 +96,9 @@ export class DashboardComponent {
 
   private filterDataSourceBySearch(query: string[]): MarvelHero[] {
     if (!query.length) {
-      return this.inmutableHeroes();
+      return this.stateHeroes();
     }
 
-    return this.inmutableHeroes().filter(hero => query.includes(hero.nameLabel));
+    return this.stateHeroes().filter(hero => query.includes(hero.nameLabel.toLowerCase()) || query.includes(hero.nameLabel));
   }
 }

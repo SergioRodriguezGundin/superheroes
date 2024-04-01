@@ -36,6 +36,33 @@ export class SearchComponent {
     this.filteredRecordsByQuery();
   }
 
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    if (value) {
+      this.records.push(value);
+    }
+
+    event.chipInput!.clear();
+    this.queryCtrl.set('');
+    this.sendQuery();
+  }
+
+  remove(value: string): void {
+    const index = this.records.indexOf(value);
+
+    if (index >= 0) {
+      this.records.splice(index, 1);
+      this.sendQuery();
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.records.push(event.option.viewValue);
+    this.queryCtrl.set('');
+    this.sendQuery();
+  }
+
   private filteredRecordsByQuery() {
     effect(() => {
       const valueToSearch = this.queryCtrl();
@@ -50,31 +77,5 @@ export class SearchComponent {
 
   private sendQuery() {
     this.search.emit(this.records);
-  }
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    if (value) {
-      this.records.push(value);
-    }
-
-    event.chipInput!.clear();
-    this.queryCtrl.set('');
-  }
-
-  remove(fruit: string): void {
-    const index = this.records.indexOf(fruit);
-
-    if (index >= 0) {
-      this.records.splice(index, 1);
-      this.sendQuery();
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.records.push(event.option.viewValue);
-    this.sendQuery();
-    this.queryCtrl.set('');
   }
 }
