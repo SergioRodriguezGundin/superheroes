@@ -1,9 +1,18 @@
 :host {
-  div {
+  .bar-chart {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
     width: 100%;
+  }
+  .tooltip {
+    position: absolute;
+    background-color: var(--mat-tree-container-background-color);
+    color: var(--mat-tree-node-text-color);
+    border-radius: 16px;
+    padding: 4px 8px;
+    pointer-events: none;
+    opacity: 0;
   }
 }

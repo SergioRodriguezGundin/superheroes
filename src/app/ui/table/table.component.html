@@ -10,6 +10,7 @@
           @if (enabledCharts()) {
           <app-column-metrics
             [data]="chartData()[$index]"
+            [columnIndex]="$index"
             [isFirstColumn]="$index === 0"
           ></app-column-metrics>
           }

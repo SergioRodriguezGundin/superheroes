@@ -14,9 +14,12 @@ import { ColumnSummaryComponent } from '../column-summary/column-summary.compone
 export class ColumnMetricsComponent {
   data = input<{ name: string; value: number }[]>([]);
 
+  columnIndex = input<number>(0);
+
   @Input() isFirstColumn = false;
 
   chartWidth = 120;
+
 
   public setChartSize(size: { width: number; height: number }) {
     this.chartWidth = size.width;

@@ -10,6 +10,7 @@
     <ng-container *ngIf="data().length > 2; else pieChart">
       <app-bar-chart
         [data]="data()"
+        [chartId]="columnIndex()"
         (chartSize)="setChartSize($event)"
       ></app-bar-chart>
     </ng-container>

@@ -5,7 +5,7 @@ import * as d3 from 'd3';
   selector: 'app-bar-chart',
   standalone: true,
   imports: [],
-  template: '<div #barChartContainer></div>',
+  template: `<div class="bar-chart" #barChartContainer></div><div [attr.id]="'tooltip' + chartId()" class="tooltip"></div>`,
   styleUrl: './bar-chart.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -15,9 +15,13 @@ export class BarChartComponent {
 
   data = input<{ name: string; value: number }[]>([]);
 
+  chartId = input<number>(0);
+
   chartSize = output<{ width: number; height: number }>();
 
   private svg: any;
+
+  private tooltip: any;
 
   private width: number = 185;
 
@@ -60,6 +64,8 @@ export class BarChartComponent {
     this.y = d3.scaleLinear()
       .range([this.height, 0]);
 
+    this.tooltip = d3.select(`#tooltip${this.chartId()}`);
+
     this.updateBarChart();
   }
 
@@ -79,6 +85,8 @@ export class BarChartComponent {
       .attr('width', this.x.bandwidth())
       .attr('y', (d: { name: string; value: number }) => this.y(d.value))
       .attr('height', (d: { name: string; value: number }) => this.height - this.y(d.value))
+      .on('mouseover', (event: any, d: { name: string; value: number }) => this.showTooltip(d))
+      .on('mouseout', () => this.hideTooltip())
       .merge(update)
       .transition()
       .duration(750)
@@ -94,6 +102,26 @@ export class BarChartComponent {
       .attr('y', (d: { name: string; value: number }) => this.y(d.value))
       .attr('height', (d: { name: string; value: number }) => this.height - this.y(d.value))
       .remove();
+  }
+
+  private showTooltip(data: { name: string; value: number }) {
+    const tooltipWidth = this.tooltip.node().offsetWidth;
+
+    const left = this.x(data.name) + this.x.bandwidth() / 2 - tooltipWidth / 2;
+    const top = this.y(data.value);
+
+    this.tooltip
+      .style('opacity', 1)
+      .style('left', `${left}px`)
+      .style('top', `${top}px`)
+      .html(`
+        <small>${data.name}</small>: <span>${data.value}</span>
+      `)
+  }
+
+  private hideTooltip() {
+    this.tooltip
+      .style('opacity', 0);
   }
 
   // - This method is to set the chart size fit to the data
