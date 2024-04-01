@@ -94,7 +94,7 @@ export class BarChartComponent {
       .attr('width', this.x.bandwidth())
       .attr('y', (d: { name: string; value: number }) => this.y(d.value))
       .attr('height', (d: { name: string; value: number }) => this.height - this.y(d.value))
-      .attr('fill', (d: any, i: number) => d3.schemeTableau10[i]);
+      .attr('fill', (d: any, i: number) => i >= 10 ? 'var(--mat-badge-background-color)' : d3.schemeCategory10[i]);
 
     update.exit()
       .transition()

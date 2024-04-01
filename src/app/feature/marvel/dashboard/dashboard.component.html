@@ -2,7 +2,7 @@
   <app-search
     searchType="Hero"
     [searchItems]="superheroesNames()"
-    [inmutableItems]="inmutableHeroesNames()"
+    [availableItems]="superHeroesNamesPersisted()"
     (search)="applySearch($event)"
   ></app-search>
   <div class="hero-options-new">

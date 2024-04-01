@@ -20,7 +20,7 @@ export class SearchComponent {
 
   searchItems = input<string[]>([]);
 
-  inmutableItems = input<string[]>([]);
+  availableItems = input<string[]>([]);
 
   search = output<string[]>();
 
@@ -39,13 +39,13 @@ export class SearchComponent {
   private filteredRecordsByQuery() {
     effect(() => {
       const valueToSearch = this.queryCtrl();
-      this.filteredRecords = valueToSearch ? this._filter(valueToSearch) : this.inmutableItems();
+      this.filteredRecords = valueToSearch ? this._filter(valueToSearch) : this.availableItems();
     })
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.inmutableItems().filter(record => record.toLowerCase().includes(filterValue));
+    return this.availableItems().filter(record => record.toLowerCase().includes(filterValue));
   }
 
   private sendQuery() {

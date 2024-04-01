@@ -16,7 +16,7 @@ export class MarvelService {
 
   superheroesNames = computed(() => this.superheroes().map(hero => hero.nameLabel));
 
-  inmutableHeroesNames: WritableSignal<string[]> = signal([]);
+  superHeroesNamesPersisted: WritableSignal<string[]> = signal([]);
 
   // - Marvel heroes chart data
 
@@ -101,6 +101,8 @@ export class MarvelService {
     hero = { ...hero, id: crypto.randomUUID() };
     this.superheroes.update((heroes) => [hero, ...heroes]);
 
+    this.superHeroesNamesPersisted.set(this.superheroes().map(hero => hero.nameLabel));
+
     // - save in db
     this.marvelDBInstance.saveSuperHeroes(this.superheroes());
   }
@@ -110,15 +112,18 @@ export class MarvelService {
       return heroes.map((_hero) => (_hero.id === hero.id ? hero : _hero));
     });
 
+    this.superHeroesNamesPersisted.set(this.superheroes().map(hero => hero.nameLabel));
+
     // - save in db
     this.marvelDBInstance.saveSuperHeroes(this.superheroes());
   }
 
   public removeHero(hero: MarvelHero) {
-
     this.superheroes.update((heroes) => {
       return heroes.filter((_hero) => _hero.id !== hero.id);
     });
+
+    this.superHeroesNamesPersisted.set(this.superheroes().map(hero => hero.nameLabel));
 
     // - save in db
     this.marvelDBInstance.saveSuperHeroes(this.superheroes());
@@ -132,6 +137,6 @@ export class MarvelService {
   private initSuperHeroesStore(state: MarvelHero[]) {
     this.superheroes.set(state);
     this.inmutableHeroes.set(state);
-    this.inmutableHeroesNames.set(state.map(hero => hero.nameLabel));
+    this.superHeroesNamesPersisted.set(state.map(hero => hero.nameLabel));
   }
 }

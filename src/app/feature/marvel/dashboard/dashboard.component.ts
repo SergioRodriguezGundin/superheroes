@@ -32,7 +32,7 @@ export class DashboardComponent {
 
   superheroesNames = this.marvelService.superheroesNames;
 
-  inmutableHeroesNames = this.marvelService.inmutableHeroesNames;
+  superHeroesNamesPersisted = this.marvelService.superHeroesNamesPersisted;
 
   heroSelected: MarvelHero | null = null;
 
