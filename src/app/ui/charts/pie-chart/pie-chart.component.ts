@@ -16,14 +16,14 @@ export class PieChartComponent {
 
   chartId = input<number>(0);
 
+  width = input<number>(185);
+
+  height = input<number>(185);
+
   chartSize = output<{ width: number; height: number }>();
   updateChart: boolean = false;
 
   currentAngle: number = 0;
-
-  private width: number = 185;
-
-  private height: number = 185;
 
   private chartSerice = inject(ChartService);
 
@@ -47,11 +47,11 @@ export class PieChartComponent {
     this.chartSerice.createChart(`chart${this.chartId()}`, this.pieChartContainer, this.data(), {
       type: 'pie',
       chartId: `#tooltip${this.chartId()}`,
-      width: this.width,
-      height: this.height,
+      width: this.width(),
+      height: this.height(),
       margin: { top: 0, right: 0, bottom: 0, left: 0 }
     });
-    this.chartSize.emit({ width: this.width, height: this.height });
+    this.chartSize.emit({ width: this.width(), height: this.height() });
   }
 
 

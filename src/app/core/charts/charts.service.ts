@@ -13,6 +13,7 @@ export class ChartService {
   };
 
   private chartFactory: { [id: string]: ChartFactory } = {};
+
   private chartInstances: { [id: string]: ChartInstance } = {};
 
   getChartFactory(chartType: Chart): ChartFactory {
@@ -27,7 +28,6 @@ export class ChartService {
 
   updateChart(id: string, data: ChartData[]) {
     if (this.chartFactory[id]) {
-      console.log('🚀 ~ ChartService ~ updateChart ~ this.chartFactory[id].instance:', this.chartInstances[id])
       this.chartFactory[id].updateChart(data, this.chartInstances[id]);
     } else {
       console.error(`Chart with id ${id} not found.`);

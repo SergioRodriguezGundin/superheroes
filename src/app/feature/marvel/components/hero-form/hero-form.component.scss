@@ -5,12 +5,13 @@
     align-items: flex-start;
     justify-content: center;
     gap: 14px;
-    padding: 16px;
+    padding: 16px 0;
     &-container {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
       .form-field {
         display: flex;
         flex-direction: column;

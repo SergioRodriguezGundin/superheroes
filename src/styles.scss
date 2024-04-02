@@ -47,7 +47,6 @@ $light-theme: mat.define-light-theme((
   @include mat.all-component-colors($light-theme);
 }
 
-
 /* You can add global styles to this file, and also import other style files */
 
 * {
@@ -82,4 +81,28 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   text-wrap: pretty;
+}
+
+/**
+ * !warning: Custom Snack Bar Styles - If the styles grow, I would recommend creating a new file for snack bar styles and manage other main styles in this file.
+ */
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background-color: transparent !important;
+}
+
+.snackbar-success {
+  background-color: #8ee692;
+}
+
+.snackbar-error {
+  background-color: #faa6a0;
+}
+
+.snackbar-warning {
+  background-color: #f7cb8b;
+}
+
+.snackbar-info {
+  background-color: #94ccf7;
 }

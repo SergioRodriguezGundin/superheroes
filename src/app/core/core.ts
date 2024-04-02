@@ -9,6 +9,7 @@ import {
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ENVIRONMENT_INITIALIZER } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export interface CoreOptions {
   routes: Routes;
@@ -35,6 +36,7 @@ export function provideCore({ routes }: CoreOptions) {
     // other application specific providers and setup
     provideHttpClient(),
 
+    MatSnackBarModule,
     // perform initialization, has to be last
     {
       provide: ENVIRONMENT_INITIALIZER,
