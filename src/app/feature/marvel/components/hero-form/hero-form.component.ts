@@ -21,7 +21,7 @@ export class HeroFormComponent {
 
   updateHero = output<MarvelHero>();
 
-  cancelFormEvent = output<void>();
+  cancelForm = output<void>();
 
   heroForm = new FormGroup({
     nameLabel: new FormControl('', Validators.required),
@@ -44,14 +44,26 @@ export class HeroFormComponent {
       } else {
         this.addHero.emit(this.heroForm.value as MarvelHero);
       }
-      this.heroForm.reset({
-        genderLabel: Gender.Male
-      });
+      this.resetForm();
     }
   }
 
-  public cancelForm() {
-    this.cancelFormEvent.emit();
+  public emitCancelForm() {
+    this.cleanErrors();
+    this.cancelForm.emit();
+  }
+
+  private resetForm() {
+    this.heroForm.reset({
+      genderLabel: Gender.Male
+    });
+    this.cleanErrors();
+  }
+
+  private cleanErrors() {
+    Object.keys(this.heroForm.controls).forEach((key) => {
+      this.heroForm.get(key)?.setErrors(null);
+    });
   }
 
   private listenToHeroSelected() {
