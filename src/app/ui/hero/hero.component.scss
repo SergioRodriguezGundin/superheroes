@@ -1,3 +1,6 @@
+.mat-mdc-standard-chip .mat-mdc-chip-action-label {
+  overflow: hidden;
+}
 :host {
   .hero {
     position: relative;
@@ -5,11 +8,13 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-
     box-shadow: none;
     max-width: 400px;
     width: 100%;
     height: 100%;
+    &-header {
+      padding: 8px 0;
+    }
     &-avatar {
       background-image: url('/assets/images/marvel/marvel-icon-card.webp');
       background-size: cover;
@@ -21,13 +26,21 @@
     &-image {
       position: relative;
       width: 100%;
-      height: 100%;
+      height: 400px;
+      &-placeholder {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 280px;
+        height: 180px;
+        z-index: 2;
+      }
       &-cover {
         position: absolute;
         background-image: linear-gradient(to top, #04000f 30%, transparent 100%);
         width: 100%;
         height: 100%;
-        position: absolute;
         z-index: 1;
       }
     }
@@ -36,6 +49,14 @@
       bottom: 0;
       width: 100%;
       z-index: 2;
+      &-attributes {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+      }
     }
   }
 }

@@ -1,10 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-interface PowerChipConfig {
-  label: string;
-  backgroundColor: string;
-  emoji: string;
-}
+import { HeroPropertiePipeConfig } from '../../interfaces/hero.interface';
 
 export const HERO_DEFAULT_POWER = 'Unknown Power';
 
@@ -13,8 +8,8 @@ export const HERO_DEFAULT_POWER = 'Unknown Power';
   standalone: true,
 })
 export class MarvelHeroPowerChipPipe implements PipeTransform {
-  transform(power: string = HERO_DEFAULT_POWER): PowerChipConfig {
-    const powerChipConfig: { [key: string]: PowerChipConfig } = {
+  transform(power: string = HERO_DEFAULT_POWER): HeroPropertiePipeConfig {
+    const powerConfig: { [key: string]: HeroPropertiePipeConfig } = {
       'energy blasts': {
         label: 'Energy Blasts',
         backgroundColor: '#F44336',
@@ -71,13 +66,13 @@ export class MarvelHeroPowerChipPipe implements PipeTransform {
         emoji: '🧪'
       },
       'levitation': {
-        label: 'teleportation in fiction',
+        label: 'levitation',
         backgroundColor: '#e398df',
         emoji: '🪽'
       }
     };
 
-    return powerChipConfig[power] || {
+    return powerConfig[power] || {
       label: power,
       backgroundColor: '#9E9E9E',
       emoji: '❓'

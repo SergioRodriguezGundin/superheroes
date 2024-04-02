@@ -1,4 +1,4 @@
-import { MarvelHeroPowerChipPipe } from './marvel-hero-power-chip.pipe';
+import { MarvelHeroPowerChipPipe } from './hero-power-chip.pipe';
 
 describe('MarvelHeroPowerChipPipe', () => {
   it('create an instance', () => {

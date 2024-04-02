@@ -28,6 +28,7 @@ export enum MarvelHeroOccupation {
   terrorist,
   writer,
 }
+
 type MarvelHeroOccupationType = keyof typeof MarvelHeroOccupation;
 
 export enum Citizens {

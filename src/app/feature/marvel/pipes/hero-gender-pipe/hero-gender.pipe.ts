@@ -1,34 +1,29 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-interface GenderHeroPipeConfig {
-  label: string;
-  backgroundColor: string;
-  emoji: string;
-}
+import { HeroPropertiePipeConfig } from '../../interfaces/hero.interface';
 
 export const HERO_GENDER_DEFAULT = 'male';
 
 @Pipe({
-  name: 'heroGenderPipe',
+  name: 'marvelHeroGenderPipe',
   standalone: true
 })
-export class HeroGenderPipe implements PipeTransform {
-  transform(gender: string = HERO_GENDER_DEFAULT): GenderHeroPipeConfig {
-    const genderChipConfig: { [key: string]: GenderHeroPipeConfig } = {
+export class MarvelHeroGenderPipe implements PipeTransform {
+  transform(gender: string = HERO_GENDER_DEFAULT): HeroPropertiePipeConfig {
+    const genderConfig: { [key: string]: HeroPropertiePipeConfig } = {
       'male': {
-        label: 'Male',
-        backgroundColor: '#4CAF50',
+        label: 'male',
+        backgroundColor: '#4240c7',
         emoji: '♂️'
       },
       'female': {
-        label: 'Female',
+        label: 'female',
         backgroundColor: '#E91E63',
         emoji: '♀️'
       }
     };
 
-    return genderChipConfig[gender] || {
-      label: 'Unknown Gender',
+    return genderConfig[gender.toLowerCase()] || {
+      label: HERO_GENDER_DEFAULT,
       backgroundColor: '#9E9E9E',
       emoji: '❓'
     };
