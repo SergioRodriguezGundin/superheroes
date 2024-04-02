@@ -5,7 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { MarvelHero } from '../interfaces/hero.interface';
+import { Gender, MarvelHero } from '../../interfaces/hero.interface';
 
 
 @Component({
@@ -46,7 +46,7 @@ export class HeroFormComponent {
         this.addHero.emit(this.heroForm.value as MarvelHero);
       }
       this.heroForm.reset({
-        genderLabel: 'male'
+        genderLabel: Gender.Male
       });
     }
   }
@@ -62,7 +62,7 @@ export class HeroFormComponent {
         this.heroForm.patchValue(hero);
       } else {
         this.heroForm.reset({
-          genderLabel: 'male',
+          genderLabel: Gender.Male,
           nameLabel: '',
         });
       }

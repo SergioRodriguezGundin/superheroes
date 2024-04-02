@@ -9,7 +9,7 @@ export default <Routes>[
       {
         path: '',
         loadComponent: () =>
-          import('./dashboard/dashboard.component').then(
+          import('./pages/dashboard/dashboard.component').then(
             (c) => c.DashboardComponent,
           )
       },

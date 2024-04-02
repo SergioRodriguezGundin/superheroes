@@ -28,7 +28,7 @@ export class MarvelDB {
 
     this.dbStatus.onupgradeneeded = (event: any) => {
       this.db = (event.target as IDBOpenDBRequest).result;
-      console.log('🚀 ~ MarvelDB ~ initDB ~ this.db:', this.db)
+      console.log('🚀 ~ MarvelDB ~ initDB ~ this.db:', this.db);
       this.createObjectStore();
     };
 

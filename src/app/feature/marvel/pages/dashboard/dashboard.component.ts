@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, Component, WritableSignal, computed, effect, i
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { AccordionComponent } from '../../../ui/accordion/accordion.component';
-import { DialogInputs } from '../../../ui/dialog/dialog.component';
-import { DialogService } from '../../../ui/dialog/dialog.service';
-import { HeroComponent } from '../../../ui/hero/hero.component';
-import { SearchComponent } from '../../../ui/search/search.component';
-import { TableComponent } from '../../../ui/table/table.component';
-import { HeroFormComponent } from '../hero-form/hero-form.component';
-import { MarvelService } from '../marvel.service';
-import { marvelSuperHeroesColumns } from '../models/marvel.model';
-import { MarvelHero } from '../interfaces/hero.interface';
+import { AccordionComponent } from '../../../../ui/accordion/accordion.component';
+import { DialogInputs } from '../../../../ui/dialog/dialog.component';
+import { DialogService } from '../../../../ui/dialog/dialog.service';
+import { HeroComponent } from '../../components/hero/hero.component';
+import { SearchComponent } from '../../../../ui/search/search.component';
+import { TableComponent } from '../../../../ui/table/table.component';
+import { HeroFormComponent } from '../../components/hero-form/hero-form.component';
+import { MarvelService } from '../../marvel.service';
+import { marvelSuperHeroesColumns } from '../../models/marvel.model';
+import { MarvelHero } from '../../interfaces/hero.interface';
 
 @Component({
   selector: 'app-dashboard',
