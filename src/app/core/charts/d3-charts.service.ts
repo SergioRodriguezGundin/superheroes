@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as d3 from 'd3';
-import { MarvelHero } from '../../feature/marvel/interfaces/marvel.interface';
 
 @Injectable({
   providedIn: 'root',
