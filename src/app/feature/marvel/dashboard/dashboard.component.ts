@@ -9,9 +9,9 @@ import { HeroComponent } from '../../../ui/hero/hero.component';
 import { SearchComponent } from '../../../ui/search/search.component';
 import { TableComponent } from '../../../ui/table/table.component';
 import { HeroFormComponent } from '../hero-form/hero-form.component';
-import { MarvelHero } from '../interfaces/marvel.interface';
 import { MarvelService } from '../marvel.service';
 import { marvelSuperHeroesColumns } from '../models/marvel.model';
+import { MarvelHero } from '../interfaces/hero.interface';
 
 @Component({
   selector: 'app-dashboard',

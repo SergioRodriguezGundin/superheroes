@@ -22,56 +22,68 @@
       @if (hero()?.nameLabel) {
       <mat-chip
         [style.backgroundColor]="
-          (hero()?.skillsLabel | heroPowerChipPipe).backgroundColor
+          (hero()?.skillsLabel | heroAttribute : 'skillsLabel').backgroundColor
         "
       >
-        {{ (hero()?.skillsLabel | heroPowerChipPipe).label }}
-        {{ (hero()?.skillsLabel | heroPowerChipPipe).emoji }}
+        {{ (hero()?.skillsLabel | heroAttribute : "skillsLabel").label }}
+        {{ (hero()?.skillsLabel | heroAttribute : "skillsLabel").emoji }}
       </mat-chip>
       } @if (hero()?.genderLabel) {
       <mat-chip
         [style.backgroundColor]="
-          (hero()?.genderLabel | marvelHeroGenderPipe).backgroundColor
+          (hero()?.genderLabel | heroAttribute : 'genderLabel').backgroundColor
         "
       >
-        {{ (hero()?.genderLabel | marvelHeroGenderPipe).label }}
-        {{ (hero()?.genderLabel | marvelHeroGenderPipe).emoji }}
+        {{ (hero()?.genderLabel | heroAttribute : "genderLabel").label }}
+        {{ (hero()?.genderLabel | heroAttribute : "genderLabel").emoji }}
       </mat-chip>
       } @if (hero()?.citizenshipLabel) {
       <mat-chip
         [style.backgroundColor]="
-          (hero()?.citizenshipLabel | marvelHeroCitizen).backgroundColor
+          (hero()?.citizenshipLabel | heroAttribute : 'citizenshipLabel')
+            .backgroundColor
         "
       >
-        {{ (hero()?.citizenshipLabel | marvelHeroCitizen).label }}
-        {{ (hero()?.citizenshipLabel | marvelHeroCitizen).emoji }}
+        {{
+          (hero()?.citizenshipLabel | heroAttribute : "citizenshipLabel").label
+        }}
+        {{
+          (hero()?.citizenshipLabel | heroAttribute : "citizenshipLabel").emoji
+        }}
       </mat-chip>
       } @if (hero()?.creatorLabel) {
       <mat-chip
         [style.backgroundColor]="
-          (hero()?.creatorLabel | marvelHeroCreator).backgroundColor
+          (hero()?.creatorLabel | heroAttribute : 'creatorLabel')
+            .backgroundColor
         "
       >
-        {{ (hero()?.creatorLabel | marvelHeroCreator).label }}
-        {{ (hero()?.creatorLabel | marvelHeroCreator).emoji }}
+        {{ (hero()?.creatorLabel | heroAttribute : "creatorLabel").label }}
+        {{ (hero()?.creatorLabel | heroAttribute : "creatorLabel").emoji }}
       </mat-chip>
       } @if (hero()?.occupationLabel) {
       <mat-chip
         [style.backgroundColor]="
-          (hero()?.occupationLabel | marvelHeroOccupation).backgroundColor
+          (hero()?.occupationLabel | heroAttribute : 'occupationLabel')
+            .backgroundColor
         "
       >
-        {{ (hero()?.occupationLabel | marvelHeroOccupation).label }}
-        {{ (hero()?.occupationLabel | marvelHeroOccupation).emoji }}
+        {{
+          (hero()?.occupationLabel | heroAttribute : "occupationLabel").label
+        }}
+        {{
+          (hero()?.occupationLabel | heroAttribute : "occupationLabel").emoji
+        }}
       </mat-chip>
       } @if (hero()?.memberOfLabel) {
       <mat-chip
         [style.backgroundColor]="
-          (hero()?.memberOfLabel | marvelHeroMemberOf).backgroundColor
+          (hero()?.memberOfLabel | heroAttribute : 'memberOfLabel')
+            .backgroundColor
         "
       >
-        {{ (hero()?.memberOfLabel | marvelHeroMemberOf).label }}
-        {{ (hero()?.memberOfLabel | marvelHeroMemberOf).emoji }}
+        {{ (hero()?.memberOfLabel | heroAttribute : "memberOfLabel").label }}
+        {{ (hero()?.memberOfLabel | heroAttribute : "memberOfLabel").emoji }}
       </mat-chip>
       }
     </section>

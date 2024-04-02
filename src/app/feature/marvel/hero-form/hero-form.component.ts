@@ -5,7 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { MarvelHero } from '../interfaces/marvel.interface';
+import { MarvelHero } from '../interfaces/hero.interface';
 
 
 @Component({

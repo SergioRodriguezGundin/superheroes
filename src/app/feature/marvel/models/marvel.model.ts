@@ -1,4 +1,4 @@
-import { MarvelHeroType } from '../interfaces/marvel.interface';
+import { MarvelHeroType } from '../interfaces/hero.interface';
 
 export const marvelSuperHeroesColumns = ['nameLabel', 'genderLabel', 'occupationLabel', 'skillsLabel', 'creatorLabel', 'citizenshipLabel', 'memberOfLabel'];
 

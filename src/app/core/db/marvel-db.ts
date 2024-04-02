@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { MarvelHero } from '../../feature/marvel/interfaces/marvel.interface';
+import { MarvelHero } from '../../feature/marvel/interfaces/hero.interface';
 
 export class MarvelDB {
   private static instance: MarvelDB;

@@ -1,5 +1,5 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { MarvelHero, MarvelHeroType } from '../interfaces/marvel.interface';
+import { MarvelHero, MarvelHeroType } from '../interfaces/hero.interface';
 
 export interface MarvelHeroesStore {
   heroes: MarvelHero[];
@@ -94,10 +94,10 @@ export class MarvelStoreService {
           superHeroLabel[key as MarvelHeroType] = {};
         }
 
-        if (!superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]]) {
-          superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]] = 0;
+        if (!superHeroLabel[key as MarvelHeroType][hero[key as keyof MarvelHero]]) {
+          superHeroLabel[key as MarvelHeroType][hero[key as keyof MarvelHero]] = 0;
         }
-        superHeroLabel[key as MarvelHeroType][hero[key as MarvelHeroType]]++;
+        superHeroLabel[key as MarvelHeroType][hero[key as keyof MarvelHero]]++;
       });
     });
 

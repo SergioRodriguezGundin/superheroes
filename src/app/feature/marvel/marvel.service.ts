@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { MarvelDB } from '../../core/db/marvel-db';
-import { MarvelHero } from './interfaces/marvel.interface';
 import { MarvelStoreService } from './store/marvel-store.service';
+import { MarvelHero } from './interfaces/hero.interface';
 const MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 
 @Injectable(
