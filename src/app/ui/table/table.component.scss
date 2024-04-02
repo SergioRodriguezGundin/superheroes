@@ -1,14 +1,16 @@
 :host {
-  .mat-mdc-row .mat-mdc-cell {
-    cursor: pointer;
-  }
+ // - mat-table styles
+ 
+ .mat-mdc-table-sticky {
+   background: var(--mat-app-background-color);
+ }
 
   .mat-mdc-header-row {
     background: var(--mat-app-background-color);
   }
 
-  .mat-mdc-table-sticky {
-    background: var(--mat-app-background-color);
+  .mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
   }
 
   .mat-mdc-row {
@@ -18,15 +20,17 @@
     }
   }
 
+  // - Component styles
+
   table {
     width: 100%;
   }
-
+  
   .table-container {
     overflow: auto;
   }
 
-  .column-header-cell {
+  .column-header__cell {
     display: flex;
     flex-direction: column;
     align-items: flex-start;

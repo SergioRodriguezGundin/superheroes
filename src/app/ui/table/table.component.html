@@ -3,8 +3,8 @@
     @for (column of displayedColumns(); track $index) {
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column">
-        <div class="column-header-cell">
-          <div class="column-header-cell__title">
+        <div class="column-header__cell">
+          <div class="column-header__cell-title">
             <h4>{{ column }}</h4>
           </div>
           @if (enabledCharts() && chartData().length) {

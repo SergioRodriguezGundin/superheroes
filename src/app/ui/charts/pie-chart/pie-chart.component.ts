@@ -9,6 +9,8 @@ import { ChartService } from '../../../core/charts/charts.service';
   styleUrl: './pie-chart.component.scss',
 })
 export class PieChartComponent {
+  private chartSerice = inject(ChartService);
+
   @ViewChild('pieChartContainer', { static: true })
   pieChartContainer!: ElementRef;
 
@@ -24,8 +26,6 @@ export class PieChartComponent {
   updateChart: boolean = false;
 
   currentAngle: number = 0;
-
-  private chartSerice = inject(ChartService);
 
   constructor() {
     effect(() => {

@@ -1,5 +1,5 @@
 <form class="hero-form" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
-  <div class="hero-form-container">
+  <div class="hero-form__container">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="nameLabel" />
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="hero-form-container">
+  <div class="hero-form__container">
     <mat-form-field>
       <mat-label>Citizenship</mat-label>
       <input matInput formControlName="citizenshipLabel" />
@@ -37,7 +37,7 @@
     </mat-form-field>
   </div>
 
-  <div class="hero-form-container">
+  <div class="hero-form__container">
     <mat-form-field>
       <mat-label>Skills</mat-label>
       <input matInput formControlName="skillsLabel" />
@@ -61,7 +61,7 @@
     </mat-form-field>
   </div>
 
-  <div class="hero-form-actions">
+  <div class="hero-form__actions">
     <button mat-button color="secondary" (click)="cancelForm()">cancel</button>
     <button mat-raised-button color="primary" type="submit">Submit</button>
   </div>

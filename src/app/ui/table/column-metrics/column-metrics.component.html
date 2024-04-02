@@ -1,4 +1,4 @@
-<div class="table-header-container" [ngStyle]="{ 'width.px': chartWidth }">
+<div class="header-box" [ngStyle]="{ 'width.px': chartWidth }">
   <ng-container *ngIf="isFirstColumn; else chart">
     <app-column-summary
       [title]="'Total entries'"

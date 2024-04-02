@@ -1,24 +1,24 @@
 <mat-card class="hero">
   <mat-card-header class="hero-header">
-    <div mat-card-avatar class="hero-avatar"></div>
+    <div mat-card-avatar class="hero-header__avatar"></div>
     <mat-card-title class="hero-title">{{ hero()?.nameLabel }}</mat-card-title>
     <mat-card-subtitle> Marvel Universe </mat-card-subtitle>
   </mat-card-header>
   <div class="hero-image">
-    <div class="hero-image-cover"></div>
+    <div class="hero-image__cover"></div>
     <img
       mat-card-image
       src="assets/images/marvel/marvel-bg-card.webp"
       alt="Marvel Universe logo"
     />
     <img
-      class="hero-image-placeholder"
+      class="hero-image__placeholder"
       src="assets/images/marvel/marvel-heroes-card.webp"
       alt="Marvel heroes background image"
     />
   </div>
   <mat-card-content class="hero-content">
-    <section class="hero-content-attributes">
+    <section class="hero-content__attributes">
       @if (hero()?.nameLabel) {
       <mat-chip
         [style.backgroundColor]="

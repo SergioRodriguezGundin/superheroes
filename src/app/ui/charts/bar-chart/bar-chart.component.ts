@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, effect, inject, input, output } from '@angular/core';
-import * as d3 from 'd3';
 import { ChartService } from '../../../core/charts/charts.service';
 import { ChartData } from '../../../core/charts/charts.interface';
 
@@ -12,6 +11,8 @@ import { ChartData } from '../../../core/charts/charts.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BarChartComponent {
+  private chartService = inject(ChartService);
+
   @ViewChild('barChartContainer', { static: true })
   barChartContainer!: ElementRef;
 
@@ -26,8 +27,6 @@ export class BarChartComponent {
   chartSize = output<{ width: number; height: number }>();
 
   hasChartUpdate: boolean = false;
-
-  private chartService = inject(ChartService);
 
   constructor() {
     effect(() => {

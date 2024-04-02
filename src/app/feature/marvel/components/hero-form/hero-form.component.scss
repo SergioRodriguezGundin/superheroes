@@ -6,7 +6,7 @@
     justify-content: center;
     gap: 14px;
     padding: 16px 0;
-    &-container {
+    &__container {
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -19,7 +19,7 @@
         justify-content: flex-start;
       }
     }
-    &-actions {
+    &__actions {
       display: flex;
       justify-content: flex-start;
       align-items: center;
