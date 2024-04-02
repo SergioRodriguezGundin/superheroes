@@ -1,3 +1,4 @@
+@defer (on idle; prefetch on idle) {
 <section class="hero-options" transition-style="in:wipe:bottom-left">
   <app-search
     searchType="Hero"
@@ -32,3 +33,4 @@
   (rowToUpdate)="updateHero($event)"
   (rowToDeleted)="removeHero($event)"
 ></app-table>
+}
