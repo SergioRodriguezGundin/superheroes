@@ -1,8 +1,8 @@
+import { BarChartComponent } from '../../charts/bar-chart/bar-chart.component';
+import { ColumnSummaryComponent } from '../column-summary/column-summary.component';
 import { CommonModule } from '@angular/common';
 import { Component, Input, input } from '@angular/core';
-import { BarChartComponent } from '../../charts/bar-chart/bar-chart.component';
 import { PieChartComponent } from '../../charts/pie-chart/pie-chart.component';
-import { ColumnSummaryComponent } from '../column-summary/column-summary.component';
 
 @Component({
   selector: 'app-column-metrics',

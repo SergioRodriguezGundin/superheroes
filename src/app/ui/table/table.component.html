@@ -5,7 +5,7 @@
       <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column">
         <div class="column-header__cell">
           <div class="column-header__cell-title">
-            <h4>{{ column }}</h4>
+            <span>{{ column }}</span>
           </div>
           @if (enabledCharts() && chartData().length) {
           <app-column-metrics

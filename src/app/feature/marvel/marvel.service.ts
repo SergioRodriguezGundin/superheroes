@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { MarvelDB } from '../../core/db/marvel-db';
-import { MarvelStoreService } from './store/marvel-store.service';
 import { MarvelHero } from './interfaces/hero.interface';
+import { MarvelStoreService } from './store/marvel-store.service';
 import { SnackBar, SnackbarService } from '../../core/snackbar/snackbar.service';
-const MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 
 @Injectable(
   { providedIn: 'root' }
@@ -15,6 +14,8 @@ export class MarvelService {
   private marvelStoreService = inject(MarvelStoreService);
 
   private snackbarService = inject(SnackbarService);
+
+  private MARVEL_HEROES_WIKI_URL = 'assets/data/wikipedia_marvel_data.json';
 
   // - Expose signals
   heroes = this.marvelStoreService.heroes;
@@ -44,7 +45,7 @@ export class MarvelService {
       if (heroes) {
         this.setSuperHeroes(heroes);
       } else {
-        this.httpClient.get<MarvelHero[]>(MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
+        this.httpClient.get<MarvelHero[]>(this.MARVEL_HEROES_WIKI_URL).subscribe((heroes: MarvelHero[]) => {
           heroes = this.getHeroesWithIds(heroes);
           this.setSuperHeroes(heroes);
           this.marvelDBInstance.saveSuperHeroes(heroes);

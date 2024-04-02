@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewChild, effect, input, output } from '@angular/core';
+import { ColumnMetricsComponent } from './column-metrics/column-metrics.component';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ColumnMetricsComponent } from './column-metrics/column-metrics.component';
 
 @Component({
   selector: 'app-table',

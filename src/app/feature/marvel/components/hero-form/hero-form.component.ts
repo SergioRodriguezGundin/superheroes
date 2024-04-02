@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Gender, MarvelHero } from '../../interfaces/hero.interface';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { Gender, MarvelHero } from '../../interfaces/hero.interface';
-
 
 @Component({
   selector: 'app-hero-form',

@@ -1,4 +1,4 @@
-<section class="hero-options">
+<section class="hero-options" transition-style="in:wipe:bottom-left">
   <app-search
     searchType="Hero"
     [searchItems]="heroNames()"
@@ -23,6 +23,7 @@
   </app-accordion>
 </section>
 <app-table
+  transition-style="in:wipe:down"
   [dataTable]="heroes()"
   [displayedColumns]="displayedColumns"
   [enabledCharts]="true"

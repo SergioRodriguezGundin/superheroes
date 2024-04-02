@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, Component, WritableSignal, computed, effect, inject, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { AccordionComponent } from '../../../../ui/accordion/accordion.component';
+import { ChangeDetectionStrategy, Component, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { DialogInputs } from '../../../../ui/dialog/dialog.component';
 import { DialogService } from '../../../../ui/dialog/dialog.service';
 import { HeroComponent } from '../../components/hero/hero.component';
-import { SearchComponent } from '../../../../ui/search/search.component';
-import { TableComponent } from '../../../../ui/table/table.component';
 import { HeroFormComponent } from '../../components/hero-form/hero-form.component';
+import { MarvelHero } from '../../interfaces/hero.interface';
 import { MarvelService } from '../../marvel.service';
 import { marvelSuperHeroesColumns } from '../../models/marvel.model';
-import { MarvelHero } from '../../interfaces/hero.interface';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { SearchComponent } from '../../../../ui/search/search.component';
+import { TableComponent } from '../../../../ui/table/table.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -53,7 +53,7 @@ export class DashboardComponent {
 
   public createHero() {
     this.heroSelected = null;
-    this.openAccordion = true;
+    this.openAccordion = !this.openAccordion;
   }
 
   public selectHero(hero: MarvelHero) {
