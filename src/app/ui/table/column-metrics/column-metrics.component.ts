@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, input } from '@angular/core';
 import { ChartComponent } from '../../chart/chart.component';
 import { ColumnSummaryComponent } from '../column-summary/column-summary.component';
+import { ChartData } from '../../../core/charts/charts.interface';
 
 @Component({
   selector: 'app-column-metrics',
@@ -11,7 +12,7 @@ import { ColumnSummaryComponent } from '../column-summary/column-summary.compone
   styleUrl: './column-metrics.component.scss'
 })
 export class ColumnMetricsComponent {
-  data = input<{ name: string; value: number }[]>([]);
+  data = input<ChartData[]>([]);
 
   columnIndex = input<number>(0);
 
