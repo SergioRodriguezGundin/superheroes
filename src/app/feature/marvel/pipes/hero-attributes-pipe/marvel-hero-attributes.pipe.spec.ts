@@ -1,8 +1,8 @@
-import { MarvelHeroAttributesPipe } from './marvel-hero-attributes.pipe';
+import { HeroAttributePipe } from './marvel-hero-attributes.pipe';
 
-describe('MarvelHeroAttributesPipe', () => {
+describe('HeroAttributePipe', () => {
   it('create an instance', () => {
-    const pipe = new MarvelHeroAttributesPipe();
+    const pipe = new HeroAttributePipe();
     expect(pipe).toBeTruthy();
   });
 });
