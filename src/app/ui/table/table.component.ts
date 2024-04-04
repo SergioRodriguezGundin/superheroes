@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 interface TableInterface {
   [x: string]: any;
@@ -9,6 +9,7 @@ interface TableInterface {
   standalone: true,
   imports: [],
   template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export abstract class TableComponent<T extends TableInterface> {
   [x: string]: any;

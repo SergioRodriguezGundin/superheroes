@@ -1,22 +1,24 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, effect, inject, input, output } from '@angular/core';
-import { ChartService } from '../../../core/charts/charts.service';
-import { ChartData } from '../../../core/charts/charts.interface';
+import { Chart, ChartData } from '../../core/charts/charts.interface';
+import { ChartService } from '../../core/charts/charts.service';
 
 @Component({
-  selector: 'app-bar-chart',
+  selector: 'app-chart',
   standalone: true,
   imports: [],
-  template: `<div class="bar-chart" #barChartContainer></div><div [attr.id]="'tooltip' + chartId()" class="tooltip"></div>`,
-  styleUrl: './bar-chart.component.scss',
+  template: `<div class="bar-chart" #chartContainer></div><div [attr.id]="'tooltip' + chartId()" class="tooltip"></div>`,
+  styleUrl: './chart.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BarChartComponent {
+export class ChartComponent {
   private chartService = inject(ChartService);
 
-  @ViewChild('barChartContainer', { static: true })
-  barChartContainer!: ElementRef;
+  @ViewChild('chartContainer', { static: true })
+  chartContainer!: ElementRef;
 
   data = input<ChartData[]>([]);
+
+  chartType = input<Chart>('bar');
 
   chartId = input<number>(0);
 
@@ -44,9 +46,9 @@ export class BarChartComponent {
   }
 
   private createBarChart() {
-    this.chartService.createChart(`chart${this.chartId()}`, this.barChartContainer, this.data(),
+    this.chartService.createChart(`chart${this.chartId()}`, this.chartContainer, this.data(),
       {
-        type: 'bar',
+        type: this.chartType(),
         chartId: `#tooltip${this.chartId()}`,
         width: this.width(),
         height: this.height(),

@@ -1,13 +1,12 @@
-import { BarChartComponent } from '../../charts/bar-chart/bar-chart.component';
-import { ColumnSummaryComponent } from '../column-summary/column-summary.component';
 import { CommonModule } from '@angular/common';
 import { Component, Input, input } from '@angular/core';
-import { PieChartComponent } from '../../charts/pie-chart/pie-chart.component';
+import { ChartComponent } from '../../chart/chart.component';
+import { ColumnSummaryComponent } from '../column-summary/column-summary.component';
 
 @Component({
   selector: 'app-column-metrics',
   standalone: true,
-  imports: [CommonModule, BarChartComponent, PieChartComponent, ColumnSummaryComponent],
+  imports: [CommonModule, ChartComponent, ColumnSummaryComponent],
   templateUrl: './column-metrics.component.html',
   styleUrl: './column-metrics.component.scss'
 })

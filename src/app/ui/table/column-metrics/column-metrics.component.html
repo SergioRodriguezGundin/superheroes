@@ -8,18 +8,20 @@
 
   <ng-template #chart>
     <ng-container *ngIf="data().length > 5; else pieChart">
-      <app-bar-chart
+      <app-chart
+        chartType="bar"
         [data]="data()"
         [chartId]="columnIndex()"
         (chartSize)="setChartSize($event)"
-      ></app-bar-chart>
+      ></app-chart>
     </ng-container>
     <ng-template #pieChart>
-      <app-pie-chart
+      <app-chart
+        chartType="pie"
         [data]="data()"
         [chartId]="columnIndex()"
         (chartSize)="setChartSize($event)"
-      ></app-pie-chart>
+      ></app-chart>
     </ng-template>
   </ng-template>
 </div>

@@ -1,4 +1,11 @@
 :host {
+  .chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
   .tooltip {
     position: absolute;
     pointer-events: none;
