@@ -77,12 +77,13 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:jest",
+          "builder": "@angular-builders/build-angular:jest",
           "options": {
-            "tsConfig": "tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+            "testMatch": [
+              "**/*.spec.ts"
+            ],
+            "setupFilesAfterEnv": [
+              "<rootDir>/src/setup-jest.ts"
             ]
           }
         }

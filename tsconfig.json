@@ -21,6 +21,12 @@
     "lib": [
       "ES2022",
       "dom"
+    ],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "jest",
+      "node"
     ]
   },
   "angularCompilerOptions": {
