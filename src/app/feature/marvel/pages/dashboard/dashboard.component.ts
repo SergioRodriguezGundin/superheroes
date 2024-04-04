@@ -1,22 +1,22 @@
-import { AccordionComponent } from '../../../../ui/accordion/accordion.component';
-import { ChangeDetectionStrategy, Component, WritableSignal, computed, effect, inject, signal } from '@angular/core';
-import { DialogInputs } from '../../../../ui/dialog/dialog.component';
-import { DialogService } from '../../../../ui/dialog/dialog.service';
-import { HeroComponent } from '../../components/hero/hero.component';
-import { HeroFormComponent } from '../../components/hero-form/hero-form.component';
-import { MarvelHero } from '../../interfaces/hero.interface';
-import { MarvelService } from '../../marvel.service';
-import { marvelSuperHeroesColumns } from '../../models/marvel.model';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { AccordionComponent } from '../../../../ui/accordion/accordion.component';
+import { DialogInputs } from '../../../../ui/dialog/dialog.component';
+import { DialogService } from '../../../../ui/dialog/dialog.service';
 import { SearchComponent } from '../../../../ui/search/search.component';
-import { TableComponent } from '../../../../ui/table/table.component';
+import { HeroFormComponent } from '../../components/hero-form/hero-form.component';
+import { HeroComponent } from '../../components/hero/hero.component';
+import { SuperHeroesTableComponent } from '../../components/super-heroes-table/super-heroes-table.component';
+import { MarvelHero } from '../../interfaces/hero.interface';
+import { MarvelService } from '../../marvel.service';
+import { marvelSuperHeroesColumns } from '../../models/marvel.model';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SearchComponent, TableComponent, MatIcon, MatButtonModule, MatMenuModule, AccordionComponent, HeroFormComponent],
+  imports: [SearchComponent, SuperHeroesTableComponent, MatIcon, MatButtonModule, MatMenuModule, AccordionComponent, HeroFormComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

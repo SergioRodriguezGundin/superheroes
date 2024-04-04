@@ -1,52 +1,24 @@
-import { ChangeDetectionStrategy, Component, ViewChild, effect, input, output } from '@angular/core';
-import { ColumnMetricsComponent } from './column-metrics/column-metrics.component';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Component, input, output } from '@angular/core';
+
+interface TableInterface {
+  [x: string]: any;
+}
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, ColumnMetricsComponent],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
+  template: '',
 })
-export class TableComponent<T> {
+export abstract class TableComponent<T extends TableInterface> {
   [x: string]: any;
   dataTable = input<T[]>([]);
-
-  displayedColumns = input<string[]>([]);
-
-  enabledCharts = input<boolean>(true);
-
-  chartData = input<{ name: string; value: number }[][]>([]);
 
   selectedRow = output<T>();
 
   rowToUpdate = output<T>();
 
   rowToDeleted = output<T>();
-
-  dataSource = new MatTableDataSource<T>([]);
-
-  clickedRows = new Set<T>();
-
-  @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
-
-  @ViewChild(MatSort) sort: MatSort = {} as MatSort;
-
-  constructor() {
-    this.listenToDataTable();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
 
   public selectRow(row: T) {
     this.selectedRow.emit(row);
@@ -58,11 +30,5 @@ export class TableComponent<T> {
 
   public deleteRow(row: T) {
     this.rowToDeleted.emit(row);
-  }
-
-  private listenToDataTable() {
-    effect(() => {
-      this.dataSource.data = this.dataTable()
-    });
   }
 }
