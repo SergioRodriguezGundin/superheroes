@@ -53,13 +53,15 @@ export class MarvelStoreService {
   }
 
   public removeHero(id: string): void {
-    const heroes = this.state().heroes.filter(hero => hero.id !== id)
-    this.state.set({ ...this.state(), heroes, heroesBackup: heroes });
+    const heroes = this.state().heroes.filter(hero => hero.id !== id);
+    const heroesBackup = this.state().heroesBackup.filter(hero => hero.id !== id);
+    this.state.set({ ...this.state(), heroes, heroesBackup });
   }
 
   public updateHero(hero: MarvelHero): void {
     const heroes = this.state().heroes.map(_hero => _hero.id === hero.id ? hero : _hero);
-    this.state.set({ ...this.state(), heroes, heroesBackup: heroes });
+    const heroesBackup = this.state().heroesBackup.map(_hero => _hero.id === hero.id ? hero : _hero);
+    this.state.set({ ...this.state(), heroes, heroesBackup });
   }
 
   public filterHeroesByNames(query: string[]) {
